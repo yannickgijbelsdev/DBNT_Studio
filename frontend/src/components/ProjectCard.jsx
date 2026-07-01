@@ -50,14 +50,14 @@ const ProjectCard = ({ project, index }) => {
         }s, transform 0.8s cubic-bezier(0.16,1,0.3,1) ${(index % 3) * 0.08}s`,
       }}
     >
-      <div className="relative w-full aspect-square overflow-hidden bg-neutral-900">
+      <div className="relative w-full aspect-square overflow-hidden rounded-3xl bg-neutral-900">
         {project.images.map((src, i) => (
           <img
             key={i}
             src={src}
             alt={`${project.client} ${i + 1}`}
             loading="lazy"
-            className="absolute inset-0 h-full w-full object-cover"
+            className="absolute inset-0 h-full w-full rounded-3xl object-cover"
             style={{
               opacity: i === idx ? 1 : 0,
               transition: "opacity 0.45s ease",

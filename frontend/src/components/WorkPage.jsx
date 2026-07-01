@@ -48,19 +48,68 @@ const WorkPage = () => {
     <div className="min-h-screen bg-white">
       <Header />
 
-      <main className="mx-auto max-w-[1600px] px-6 pt-32 lg:px-10 lg:pt-40">
-        {/* Hero row */}
-        <div className="flex flex-col gap-10 lg:flex-row lg:items-start lg:justify-between">
-          <h1 className="relative font-extrabold leading-[0.82] tracking-[-0.04em] text-neutral-900">
-            <span className="block text-[22vw] lg:text-[13rem]">Work</span>
-            <sup className="absolute -right-2 top-4 text-base font-medium tracking-normal text-neutral-400 lg:text-xl">
-              {pad2(filtered.length)}
-            </sup>
-          </h1>
+      <main className="mx-auto max-w-[1600px] px-6 pt-28 lg:px-10 lg:pt-32">
+        {/* Rounded banner with dummy content */}
+        <section className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-neutral-900 to-neutral-800 px-8 py-14 text-white md:px-16 md:py-20 lg:rounded-[2.5rem]">
+          <div className="pointer-events-none absolute -right-16 -top-24 h-72 w-72 rounded-full bg-white/10 blur-3xl" />
+          <div className="pointer-events-none absolute -bottom-24 -left-10 h-72 w-72 rounded-full bg-white/5 blur-3xl" />
 
-          <div className="lg:pt-10">
-            <FilterBar selected={selected} setSelected={setSelected} />
+          <div className="relative flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+            <div className="max-w-3xl">
+              <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-xs font-medium uppercase tracking-[0.16em] text-white/80 backdrop-blur">
+                <span className="h-1.5 w-1.5 rounded-full bg-white" />
+                Selected Work
+              </span>
+              <h1 className="mt-6 text-4xl font-extrabold leading-[1.02] tracking-tight md:text-6xl lg:text-7xl">
+                Your dummy banner headline goes right here
+              </h1>
+              <p className="mt-5 max-w-xl text-base leading-relaxed text-white/70 md:text-lg">
+                This is placeholder content for the banner. Swap in your own copy,
+                imagery and call-to-action. A memorable brand makes a business
+                stronger — faster decisions, higher premiums, repeat purchase.
+              </p>
+              <div className="mt-8 flex flex-wrap items-center gap-3">
+                <a
+                  href="#work-grid"
+                  className="rounded-full bg-white px-7 py-3.5 text-sm font-medium text-neutral-900 transition-colors hover:bg-neutral-200"
+                >
+                  Explore projects
+                </a>
+                <a
+                  href="#"
+                  className="rounded-full border border-white/30 px-7 py-3.5 text-sm font-medium text-white transition-colors hover:bg-white/10"
+                >
+                  Learn more
+                </a>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-8 rounded-3xl bg-white/5 px-8 py-6 backdrop-blur">
+              <div>
+                <div className="text-4xl font-extrabold tracking-tight">
+                  {String(filtered.length).padStart(2, "0")}
+                </div>
+                <div className="mt-1 text-xs uppercase tracking-[0.16em] text-white/60">
+                  Projects
+                </div>
+              </div>
+              <div className="h-12 w-px bg-white/15" />
+              <div>
+                <div className="text-4xl font-extrabold tracking-tight">6</div>
+                <div className="mt-1 text-xs uppercase tracking-[0.16em] text-white/60">
+                  Studios
+                </div>
+              </div>
+            </div>
           </div>
+        </section>
+
+        {/* Filter row */}
+        <div className="mt-10 flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+          <h2 className="text-2xl font-bold tracking-tight text-neutral-900">
+            All case studies
+          </h2>
+          <FilterBar selected={selected} setSelected={setSelected} />
         </div>
 
         {/* Active filter chips */}
@@ -88,7 +137,8 @@ const WorkPage = () => {
         {/* Grid */}
         <div
           ref={gridRef}
-          className="mt-14 grid grid-cols-1 gap-x-6 gap-y-14 sm:grid-cols-2 lg:mt-20 lg:grid-cols-3"
+          id="work-grid"
+          className="mt-14 grid grid-cols-1 gap-x-6 gap-y-14 sm:grid-cols-2 lg:mt-16 lg:grid-cols-3"
         >
           {visible.map((p, i) => (
             <ProjectCard key={p.id} project={p} index={i} />
