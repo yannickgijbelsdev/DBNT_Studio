@@ -85,19 +85,19 @@ const FilterBar = ({ selected, setSelected }) => {
         Filter:
       </span>
       <FilterDropdown
-        label="Region"
+        label="Regio"
         options={FILTERS.region}
         selected={selected.region}
         onToggle={(v) => toggle("region", v)}
       />
       <FilterDropdown
-        label="Industry"
+        label="Sector"
         options={FILTERS.industry}
         selected={selected.industry}
         onToggle={(v) => toggle("industry", v)}
       />
       <FilterDropdown
-        label="Service"
+        label="Dienst"
         options={FILTERS.service}
         selected={selected.service}
         onToggle={(v) => toggle("service", v)}

@@ -58,28 +58,28 @@ const WorkPage = () => {
             <div className="max-w-3xl">
               <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-xs font-medium uppercase tracking-[0.16em] text-white/80 backdrop-blur">
                 <span className="h-1.5 w-1.5 rounded-full bg-white" />
-                Selected Work
+                Geselecteerd werk
               </span>
               <h1 className="mt-6 text-4xl font-extrabold leading-[1.02] tracking-tight md:text-6xl lg:text-7xl">
-                Your dummy banner headline goes right here
+                Jouw voorbeeld-bannertitel komt hier te staan
               </h1>
               <p className="mt-5 max-w-xl text-base leading-relaxed text-white/70 md:text-lg">
-                This is placeholder content for the banner. Swap in your own copy,
-                imagery and call-to-action. A memorable brand makes a business
-                stronger — faster decisions, higher premiums, repeat purchase.
+                Dit is voorbeeldtekst voor de banner. Vervang deze door je eigen
+                tekst, beeld en call-to-action. Een sterk merk maakt een bedrijf
+                krachtiger — snellere beslissingen, hogere marges en herhaalaankopen.
               </p>
               <div className="mt-8 flex flex-wrap items-center gap-3">
                 <a
                   href="#work-grid"
                   className="rounded-full bg-white px-7 py-3.5 text-sm font-medium text-neutral-900 transition-colors hover:bg-neutral-200"
                 >
-                  Explore projects
+                  Bekijk projecten
                 </a>
                 <a
                   href="#"
                   className="rounded-full border border-white/30 px-7 py-3.5 text-sm font-medium text-white transition-colors hover:bg-white/10"
                 >
-                  Learn more
+                  Meer weten
                 </a>
               </div>
             </div>
@@ -90,14 +90,14 @@ const WorkPage = () => {
                   {String(filtered.length).padStart(2, "0")}
                 </div>
                 <div className="mt-1 text-xs uppercase tracking-[0.16em] text-white/60">
-                  Projects
+                  Projecten
                 </div>
               </div>
               <div className="h-12 w-px bg-white/15" />
               <div>
                 <div className="text-4xl font-extrabold tracking-tight">6</div>
                 <div className="mt-1 text-xs uppercase tracking-[0.16em] text-white/60">
-                  Studios
+                  Studio's
                 </div>
               </div>
             </div>
@@ -107,7 +107,7 @@ const WorkPage = () => {
         {/* Filter row */}
         <div className="mt-10 flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
           <h2 className="text-2xl font-bold tracking-tight text-neutral-900">
-            All case studies
+            Alle casestudy's
           </h2>
           <FilterBar selected={selected} setSelected={setSelected} />
         </div>
@@ -129,7 +129,7 @@ const WorkPage = () => {
               onClick={() => setSelected({ region: [], industry: [], service: [] })}
               className="px-2 py-1.5 text-xs font-medium text-neutral-400 underline-offset-4 hover:text-neutral-900 hover:underline"
             >
-              Clear all
+              Alles wissen
             </button>
           </div>
         )}
@@ -148,7 +148,7 @@ const WorkPage = () => {
         {filtered.length === 0 && (
           <div className="py-32 text-center">
             <p className="text-lg text-neutral-400">
-              No projects match your filters.
+              Geen projecten komen overeen met je filters.
             </p>
           </div>
         )}
@@ -160,7 +160,7 @@ const WorkPage = () => {
               onClick={() => setCount((c) => c + PAGE_SIZE)}
               className="rounded-full border border-neutral-900 px-8 py-3.5 text-sm font-medium text-neutral-900 transition-colors hover:bg-neutral-900 hover:text-white"
             >
-              Load more
+              Meer laden
             </button>
           </div>
         )}

@@ -1,16 +1,16 @@
-// MOCKED DATA - Saffron Brand Consultants "Work" page clone
-// Real project imagery pulled from Saffron's public imgix CDN for design fidelity.
+// GEMOCKTE DATA - Kloon van de "Werk"-pagina van Saffron Brand Consultants
+// Echte projectbeelden via Saffron's publieke imgix-CDN voor visuele getrouwheid.
 
-const ix = (u) => u; // images already carry imgix params
+const ix = (u) => u; // afbeeldingen bevatten al imgix-parameters
 
 export const PROJECTS = [
   {
     id: "cupra",
     client: "Cupra",
-    industry: ["Mobility & Hospitality"],
-    region: "Europe",
-    services: ["Brand Identity", "Brand Positioning"],
-    title: "The impulse of a new generation",
+    industry: ["Mobiliteit & Horeca"],
+    region: "Europa",
+    services: ["Merkidentiteit", "Merkpositionering"],
+    title: "De impuls van een nieuwe generatie",
     images: [
       ix("https://saffron.imgix.net/Case-Studies/Cupra_CS/Gallery/Cupra-CS_Hover_1.png?ixlib=js-3.8.0&q=75&auto=format%2Ccompress&max-w=1200&ar=1%3A1&fit=crop"),
       ix("https://saffron.imgix.net/Case-Studies/Cupra_CS/Gallery/Cupra-CS_Hover_2.png?ixlib=js-3.8.0&q=75&auto=format%2Ccompress&max-w=1200&ar=1%3A1&fit=crop"),
@@ -23,10 +23,10 @@ export const PROJECTS = [
   {
     id: "meta",
     client: "Meta",
-    industry: ["Technology"],
-    region: "Americas",
-    services: ["Brand Architecture", "Experience Ecosystem"],
-    title: "The next chapter of social connection",
+    industry: ["Technologie"],
+    region: "Amerika",
+    services: ["Merkarchitectuur", "Ervaringsecosysteem"],
+    title: "Het volgende hoofdstuk van sociale verbinding",
     images: [
       ix("https://saffron.imgix.net/Case-Studies/Meta_CS/Meta_MBS/Gallery/Meta_Hover_IMG_1x1_1.png?ixlib=js-3.8.0&q=75&auto=format%2Ccompress&max-w=1200&ar=1%3A1&fit=crop"),
       ix("https://saffron.imgix.net/Case-Studies/Meta_CS/Meta_MBS/Gallery/Meta_Hover_IMG_1x1_2.png?ixlib=js-3.8.0&q=75&auto=format%2Ccompress&max-w=1200&ar=1%3A1&fit=crop"),
@@ -39,10 +39,10 @@ export const PROJECTS = [
   {
     id: "galp",
     client: "Galp",
-    industry: ["Energy & Industrial"],
-    region: "Europe",
-    services: ["Brand Identity", "Delivery System"],
-    title: "Evolving energy for life",
+    industry: ["Energie & Industrie"],
+    region: "Europa",
+    services: ["Merkidentiteit", "Leveringssysteem"],
+    title: "Energie die meegroeit met het leven",
     images: [
       ix("https://saffron.imgix.net/Case-Studies/Galp_CS/Gallery/Galp_CS_Gallery_1_4x.webp?ixlib=js-3.8.0&q=75&auto=format%2Ccompress&max-w=1200&ar=1%3A1&fit=crop"),
       ix("https://saffron.imgix.net/Case-Studies/Galp_CS/Gallery/Galp_CS_Gallery_2_4x.webp?ixlib=js-3.8.0&q=75&auto=format%2Ccompress&max-w=1200&ar=1%3A1&fit=crop"),
@@ -55,10 +55,10 @@ export const PROJECTS = [
   {
     id: "play",
     client: "Play Media",
-    industry: ["Culture & Media"],
-    region: "Europe",
-    services: ["Brand Identity", "Customer Experience"],
-    title: "Rewriting the rules of Play",
+    industry: ["Cultuur & Media"],
+    region: "Europa",
+    services: ["Merkidentiteit", "Klantervaring"],
+    title: "De regels van Play herschrijven",
     images: [
       ix("https://saffron.imgix.net/Case-Studies/Play-Media_CS/Gallery/Play-Media_CS_P1_4x5_1_3x.webp?ixlib=js-3.8.0&q=75&auto=format%2Ccompress&max-w=1200&ar=1%3A1&fit=crop"),
       ix("https://saffron.imgix.net/Case-Studies/Play-Media_CS/Gallery/Play-Media_CS_Gallery_2_3x.webp?ixlib=js-3.8.0&q=75&auto=format%2Ccompress&max-w=1200&ar=1%3A1&fit=crop"),
@@ -71,10 +71,10 @@ export const PROJECTS = [
   {
     id: "blue-car-rental",
     client: "Blue Car Rental",
-    industry: ["Mobility & Hospitality"],
-    region: "Europe",
-    services: ["Brand Identity", "Brand Positioning"],
-    title: "Discovering the road to Iceland",
+    industry: ["Mobiliteit & Horeca"],
+    region: "Europa",
+    services: ["Merkidentiteit", "Merkpositionering"],
+    title: "De weg naar IJsland ontdekken",
     images: [
       ix("https://saffron.imgix.net/Case-Studies/Blue-Car_CS/Gallery/Blue-Car_1x1_Hover_1_3x.webp?ixlib=js-3.8.0&q=75&auto=format%2Ccompress&max-w=1200&ar=1%3A1&fit=crop"),
       ix("https://saffron.imgix.net/Case-Studies/Blue-Car_CS/Gallery/Blue-Car_1x1_Hover_2_3x.webp?ixlib=js-3.8.0&q=75&auto=format%2Ccompress&max-w=1200&ar=1%3A1&fit=crop"),
@@ -87,10 +87,10 @@ export const PROJECTS = [
   {
     id: "zelestra",
     client: "Zelestra",
-    industry: ["Energy & Industrial"],
-    region: "Europe",
-    services: ["Brand Positioning", "Brand Identity"],
-    title: "Powering progress with purpose",
+    industry: ["Energie & Industrie"],
+    region: "Europa",
+    services: ["Merkpositionering", "Merkidentiteit"],
+    title: "Vooruitgang aandrijven met een doel",
     images: [
       ix("https://saffron.imgix.net/Case-Studies/Zelestra_CS/Gallery/Zelestra_Hover_1_3x.webp?ixlib=js-3.8.0&q=75&auto=format%2Ccompress&max-w=1200&ar=1%3A1&fit=crop"),
       ix("https://saffron.imgix.net/Case-Studies/Zelestra_CS/Gallery/Zelestra_Hover_2_3x.webp?ixlib=js-3.8.0&q=75&auto=format%2Ccompress&max-w=1200&ar=1%3A1&fit=crop"),
@@ -103,10 +103,10 @@ export const PROJECTS = [
   {
     id: "art-basel-zero-10",
     client: "Art Basel",
-    industry: ["Culture & Media"],
-    region: "Europe",
-    services: ["Experience Ecosystem", "Prototype"],
-    title: "Expanding Art Basel into the digital era",
+    industry: ["Cultuur & Media"],
+    region: "Europa",
+    services: ["Ervaringsecosysteem", "Prototype"],
+    title: "Art Basel uitbreiden naar het digitale tijdperk",
     images: [
       ix("https://saffron.imgix.net/Case-Studies/Zero-10_CS/Gallery/Zero-10_Hover_1.webp?ixlib=js-3.8.0&q=75&auto=format%2Ccompress&max-w=1200&ar=1%3A1&fit=crop"),
       ix("https://saffron.imgix.net/Case-Studies/Zero-10_CS/Gallery/Zero-10_Hover_2.webp?ixlib=js-3.8.0&q=75&auto=format%2Ccompress&max-w=1200&ar=1%3A1&fit=crop"),
@@ -119,10 +119,10 @@ export const PROJECTS = [
   {
     id: "west-japan-railway-company",
     client: "West Japan Railway Company",
-    industry: ["Mobility & Hospitality", "Places & Real Estate"],
-    region: "Asia",
-    services: ["Brand Architecture", "Customer Experience"],
-    title: "The extraordinary in plain sight",
+    industry: ["Mobiliteit & Horeca", "Locaties & Vastgoed"],
+    region: "Azië",
+    services: ["Merkarchitectuur", "Klantervaring"],
+    title: "Het buitengewone in het volle zicht",
     images: [
       ix("https://saffron.imgix.net/Case-Studies/JR-West_CS/Gallery/JR-West_Cover_1.2.webp?ixlib=js-3.8.0&q=75&auto=format%2Ccompress&max-w=1200&ar=1%3A1&fit=crop"),
       ix("https://saffron.imgix.net/Case-Studies/JR-West_CS/Gallery/JR-West_Hover_3.webp?ixlib=js-3.8.0&q=75&auto=format%2Ccompress&max-w=1200&ar=1%3A1&fit=crop"),
@@ -135,10 +135,10 @@ export const PROJECTS = [
   {
     id: "mobily",
     client: "Mobily",
-    industry: ["Technology", "Telecommunications"],
-    region: "Middle East",
-    services: ["Brand Positioning", "Brand Identity"],
-    title: "Saudi\u2019s challenger. Supercharged.",
+    industry: ["Technologie", "Telecommunicatie"],
+    region: "Midden-Oosten",
+    services: ["Merkpositionering", "Merkidentiteit"],
+    title: "De uitdager van Saoedi-Arabië. Turbogeladen.",
     images: [
       ix("https://saffron.imgix.net/Case-Studies/Mobily_CS/Gallery-2/Mobily_CS_Gallery_1_h.png?ixlib=js-3.8.0&q=75&auto=format%2Ccompress&max-w=1200&ar=1%3A1&fit=crop"),
       ix("https://saffron.imgix.net/Case-Studies/Mobily_CS/Gallery-2/Mobily_CS_Gallery_2.png?ixlib=js-3.8.0&q=75&auto=format%2Ccompress&max-w=1200&ar=1%3A1&fit=crop"),
@@ -151,10 +151,10 @@ export const PROJECTS = [
   {
     id: "amazon-ads",
     client: "Amazon Ads",
-    industry: ["Technology"],
-    region: "Americas",
-    services: ["Brand Identity", "Experience Ecosystem"],
-    title: "The rise of Ads",
+    industry: ["Technologie"],
+    region: "Amerika",
+    services: ["Merkidentiteit", "Ervaringsecosysteem"],
+    title: "De opkomst van Ads",
     images: [
       ix("https://saffron.imgix.net/Case-Studies/Amazon-Ads_CS/Gallery/AAds_Hover_1x1_2.png?ixlib=js-3.8.0&q=75&auto=format%2Ccompress&max-w=1200&ar=1%3A1&fit=crop"),
       ix("https://saffron.imgix.net/Case-Studies/Amazon-Ads_CS/Gallery/AAds_Hover_1x1_2.2.png?ixlib=js-3.8.0&q=75&auto=format%2Ccompress&max-w=1200&ar=1%3A1&fit=crop"),
@@ -167,10 +167,10 @@ export const PROJECTS = [
   {
     id: "alphasense",
     client: "AlphaSense",
-    industry: ["Technology"],
-    region: "Americas",
-    services: ["Brand Positioning", "Brand Identity"],
-    title: "The future of decision-making",
+    industry: ["Technologie"],
+    region: "Amerika",
+    services: ["Merkpositionering", "Merkidentiteit"],
+    title: "De toekomst van besluitvorming",
     images: [
       ix("https://saffron.imgix.net/Case-Studies/AlphaSense_CS/Gallery/Alphasense_Hover_IMG_1x1_1.png?ixlib=js-3.8.0&q=75&auto=format%2Ccompress&max-w=1200&ar=1%3A1&fit=crop"),
       ix("https://saffron.imgix.net/Case-Studies/AlphaSense_CS/Gallery/Alphasense_Hover_IMG_1x1_2.png?ixlib=js-3.8.0&q=75&auto=format%2Ccompress&max-w=1200&ar=1%3A1&fit=crop"),
@@ -183,10 +183,10 @@ export const PROJECTS = [
   {
     id: "repsol",
     client: "Repsol",
-    industry: ["Energy & Industrial"],
-    region: "Europe",
-    services: ["Brand Architecture", "Delivery System"],
-    title: "Confluence of energies",
+    industry: ["Energie & Industrie"],
+    region: "Europa",
+    services: ["Merkarchitectuur", "Leveringssysteem"],
+    title: "Samenvloeiing van energieën",
     images: [
       ix("https://saffron.imgix.net/Case-Studies/Repsol_CS/Gallery/Repsol_Hover_IMG_1x1_1.png?ixlib=js-3.8.0&q=75&auto=format%2Ccompress&max-w=1200&ar=1%3A1&fit=crop"),
       ix("https://saffron.imgix.net/Case-Studies/Repsol_CS/Gallery/Repsol_Hover_IMG_1x1_2.png?ixlib=js-3.8.0&q=75&auto=format%2Ccompress&max-w=1200&ar=1%3A1&fit=crop"),
@@ -199,10 +199,10 @@ export const PROJECTS = [
   {
     id: "radio-1",
     client: "VRT",
-    industry: ["Culture & Media"],
-    region: "Europe",
-    services: ["Brand Identity", "Customer Experience"],
-    title: "Essential Listening",
+    industry: ["Cultuur & Media"],
+    region: "Europa",
+    services: ["Merkidentiteit", "Klantervaring"],
+    title: "Essentieel luisteren",
     images: [
       ix("https://saffron.imgix.net/Case-Studies/VRT_Radio-1_CS/Gallery/Radio-1_Hover_IMG_1x1_1.png?ixlib=js-3.8.0&q=75&auto=format%2Ccompress&max-w=1200&ar=1%3A1&fit=crop"),
       ix("https://saffron.imgix.net/Case-Studies/VRT_Radio-1_CS/Gallery/Radio-1_Hover_IMG_1x1_2.png?ixlib=js-3.8.0&q=75&auto=format%2Ccompress&max-w=1200&ar=1%3A1&fit=crop"),
@@ -215,10 +215,10 @@ export const PROJECTS = [
   {
     id: "youtube",
     client: "YouTube",
-    industry: ["Technology"],
-    region: "Americas",
-    services: ["Brand Architecture", "Experience Ecosystem"],
-    title: "Taking the tube out of YouTube",
+    industry: ["Technologie"],
+    region: "Amerika",
+    services: ["Merkarchitectuur", "Ervaringsecosysteem"],
+    title: "De tube uit YouTube halen",
     images: [
       ix("https://saffron.imgix.net/Case-Studies/Youtube_CS/Gallery/YouTube_Hover_IMG_1x1_1.png?ixlib=js-3.8.0&q=75&auto=format%2Ccompress&max-w=1200&ar=1%3A1&fit=crop"),
       ix("https://saffron.imgix.net/Case-Studies/Youtube_CS/Gallery/YouTube_Hover_IMG_1x1_2.png?ixlib=js-3.8.0&q=75&auto=format%2Ccompress&max-w=1200&ar=1%3A1&fit=crop"),
@@ -231,10 +231,10 @@ export const PROJECTS = [
   {
     id: "gulf-air",
     client: "Gulf Air",
-    industry: ["Mobility & Hospitality"],
-    region: "Middle East",
-    services: ["Brand Identity", "Customer Experience"],
-    title: "Reawakening the original Middle Eastern airline",
+    industry: ["Mobiliteit & Horeca"],
+    region: "Midden-Oosten",
+    services: ["Merkidentiteit", "Klantervaring"],
+    title: "De oorspronkelijke Midden-Oosterse luchtvaartmaatschappij nieuw leven inblazen",
     images: [
       ix("https://saffron.imgix.net/Case-Studies/Gulf-Air_CS/Gallery/Gulf-Air_Hover_IMG_1x1_1.png?ixlib=js-3.8.0&q=75&auto=format%2Ccompress&max-w=1200&ar=1%3A1&fit=crop"),
       ix("https://saffron.imgix.net/Case-Studies/Gulf-Air_CS/Gallery/Gulf-Air_Hover_IMG_1x1_2.png?ixlib=js-3.8.0&q=75&auto=format%2Ccompress&max-w=1200&ar=1%3A1&fit=crop"),
@@ -247,33 +247,24 @@ export const PROJECTS = [
 ];
 
 export const FILTERS = {
-  region: ["Europe", "Americas", "Middle East", "Asia"],
+  region: ["Europa", "Amerika", "Midden-Oosten", "Azië"],
   industry: [
-    "Mobility & Hospitality",
-    "Energy & Industrial",
-    "Culture & Media",
-    "Technology",
-    "Telecommunications",
-    "Places & Real Estate",
+    "Mobiliteit & Horeca",
+    "Energie & Industrie",
+    "Cultuur & Media",
+    "Technologie",
+    "Telecommunicatie",
+    "Locaties & Vastgoed",
   ],
   service: [
-    "Brand Architecture",
-    "Brand Identity",
-    "Brand Positioning",
-    "Business Case",
-    "Customer Experience",
-    "Delivery System",
-    "Employee Experience",
-    "Experience Ecosystem",
+    "Merkarchitectuur",
+    "Merkidentiteit",
+    "Merkpositionering",
+    "Businesscase",
+    "Klantervaring",
+    "Leveringssysteem",
+    "Medewerkerservaring",
+    "Ervaringsecosysteem",
     "Prototype",
   ],
 };
-
-export const NAV_LINKS = [
-  { label: "Work", href: "#", active: true },
-  { label: "About", href: "#" },
-  { label: "Journal", href: "#" },
-  { label: "Lab", href: "#" },
-  { label: "Careers", href: "#", badge: 1 },
-  { label: "Contact", href: "#" },
-];
