@@ -28,7 +28,7 @@ const Footer = () => {
 
         <div className="mt-20 grid grid-cols-2 gap-10 md:grid-cols-4">
           <div>
-            <span className="text-3xl font-extrabold tracking-tight">saffron</span>
+            <span className="text-3xl font-extrabold tracking-tight">DBNT</span>
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-neutral-400">
               Wij zijn jouw partner voor merk &amp; beleving en brengen jouw DNA tot leven.
             </p>
@@ -55,7 +55,7 @@ const Footer = () => {
         </div>
 
         <div className="mt-16 flex flex-col gap-4 border-t border-neutral-800 pt-8 text-xs text-neutral-500 md:flex-row md:items-center md:justify-between">
-          <span>© {new Date().getFullYear()} Saffron Brand Consultants — Kloon (demo)</span>
+          <span>© {new Date().getFullYear()} DBNT — Kloon (demo)</span>
           <div className="flex gap-6">
             <a href="#" className="transition-colors hover:text-white">Privacy</a>
             <a href="#" className="transition-colors hover:text-white">Cookies</a>

@@ -21,7 +21,7 @@ const Header = () => {
       <div className="mx-auto flex h-[68px] max-w-[1600px] items-center px-6 lg:px-10">
         <a href="#" className="select-none">
           <span className="text-2xl font-extrabold tracking-tight text-neutral-900">
-            saffron
+            DBNT
           </span>
         </a>
       </div>
