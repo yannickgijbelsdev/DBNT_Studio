@@ -4,6 +4,7 @@ from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
 import os
 import logging
+import hashlib
 from pathlib import Path
 from pydantic import BaseModel, Field, ConfigDict
 from typing import List
@@ -96,6 +97,29 @@ def get_news_article(article_id: str):
     except requests.RequestException as e:
         logger.error(f"News article fetch failed: {e}")
         raise HTTPException(status_code=502, detail="Kon artikel niet ophalen")
+
+# ---- VDC deploy integration: read-only source-version hash ----
+@api_router.get("/vdc/source-version")
+def source_version():
+    """Public, read-only. Returns a content hash of the source tree.
+    No parameters, no side effects, no source content or secrets exposed."""
+    h = hashlib.sha256()
+    roots = [Path("/app/backend"), Path("/app/frontend/src")]
+    files = []
+    skip = {"node_modules", "__pycache__", ".venv", "venv", "dist", "build", ".git"}
+    for root in roots:
+        if not root.exists():
+            continue
+        for p in sorted(root.rglob("*")):
+            if any(part in skip for part in p.parts):
+                continue
+            if p.is_file():
+                files.append(p)
+    for p in files:
+        h.update(str(p).encode())
+        h.update(str(p.stat().st_mtime_ns).encode())
+        h.update(str(p.stat().st_size).encode())
+    return {"hash": h.hexdigest()[:16], "files": len(files)}
 
 # Include the router in the main app
 app.include_router(api_router)
