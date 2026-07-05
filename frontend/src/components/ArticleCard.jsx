@@ -1,22 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-const formatDate = (iso) => {
-  if (!iso) return "";
-  try {
-    return new Date(iso).toLocaleDateString("nl-NL", {
-      day: "numeric",
-      month: "long",
-      year: "numeric",
-    });
-  } catch {
-    return "";
-  }
-};
-
-const ArticleCard = ({ article, index, onOpen }) => {
+const ArticleCard = ({ article, index }) => {
   const [visible, setVisible] = useState(false);
   const [hover, setHover] = useState(false);
   const ref = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const el = ref.current;
@@ -37,7 +26,7 @@ const ArticleCard = ({ article, index, onOpen }) => {
   return (
     <button
       ref={ref}
-      onClick={() => onOpen(article)}
+      onClick={() => navigate(`/artikel/${article.id}`)}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
       className="group block w-full text-left"
@@ -68,32 +57,10 @@ const ArticleCard = ({ article, index, onOpen }) => {
             </span>
           </div>
         )}
-
-        {/* category chip */}
-        <div
-          className="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 backdrop-blur"
-          style={{
-            opacity: hover ? 1 : 0,
-            transform: hover ? "translateY(0)" : "translateY(-8px)",
-            transition: "opacity 0.4s ease, transform 0.4s ease",
-          }}
-        >
-          <span className="text-xs font-medium tracking-tight text-neutral-900">
-            {article.category?.name || "Artikel"}
-          </span>
-        </div>
       </div>
 
       <div className="mt-4">
-        <div className="flex items-baseline justify-between gap-4">
-          <span className="text-sm font-medium tracking-tight text-neutral-900">
-            {article.category?.name || "Artikel"}
-          </span>
-          <span className="text-right text-xs text-neutral-400">
-            {formatDate(article.published_at)}
-          </span>
-        </div>
-        <p className="mt-1 text-lg font-medium leading-snug tracking-tight text-neutral-900 transition-opacity group-hover:opacity-70">
+        <p className="text-lg font-medium leading-snug tracking-tight text-neutral-900 transition-opacity group-hover:opacity-70">
           {article.title}
         </p>
         {article.excerpt && (
@@ -106,5 +73,4 @@ const ArticleCard = ({ article, index, onOpen }) => {
   );
 };
 
-export { formatDate };
 export default ArticleCard;

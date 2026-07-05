@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Loader2, RotateCw } from "lucide-react";
+import { RotateCw } from "lucide-react";
 import Header from "./Header";
 import ArticleCard from "./ArticleCard";
-import ArticleModal from "./ArticleModal";
 import Footer from "./Footer";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
@@ -13,10 +12,6 @@ const WorkPage = () => {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-
-  const [modalOpen, setModalOpen] = useState(false);
-  const [articleLoading, setArticleLoading] = useState(false);
-  const [activeArticle, setActiveArticle] = useState(null);
 
   const fetchArticles = async () => {
     setLoading(true);
@@ -34,22 +29,6 @@ const WorkPage = () => {
   useEffect(() => {
     fetchArticles();
   }, []);
-
-  const openArticle = async (article) => {
-    setModalOpen(true);
-    setArticleLoading(true);
-    setActiveArticle(null);
-    try {
-      const res = await axios.get(`${API}/news/articles/${article.id}`);
-      setActiveArticle(res.data);
-    } catch (e) {
-      setActiveArticle(null);
-    } finally {
-      setArticleLoading(false);
-    }
-  };
-
-  const closeModal = () => setModalOpen(false);
 
   return (
     <div className="min-h-screen bg-white">
@@ -140,7 +119,7 @@ const WorkPage = () => {
           {!loading &&
             !error &&
             articles.map((a, i) => (
-              <ArticleCard key={a.id} article={a} index={i} onOpen={openArticle} />
+              <ArticleCard key={a.id} article={a} index={i} />
             ))}
         </div>
 
@@ -170,15 +149,9 @@ const WorkPage = () => {
       <div className="mt-32">
         <Footer />
       </div>
-
-      <ArticleModal
-        open={modalOpen}
-        loading={articleLoading}
-        article={activeArticle}
-        onClose={closeModal}
-      />
     </div>
   );
 };
 
 export default WorkPage;
+
