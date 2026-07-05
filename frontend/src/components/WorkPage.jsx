@@ -1,48 +1,55 @@
-import React, { useMemo, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { Loader2, RotateCw } from "lucide-react";
 import Header from "./Header";
-import FilterBar from "./FilterBar";
-import ProjectCard from "./ProjectCard";
+import ArticleCard from "./ArticleCard";
+import ArticleModal from "./ArticleModal";
 import Footer from "./Footer";
-import { PROJECTS } from "../mock";
-import { X } from "lucide-react";
 
-const PAGE_SIZE = 12;
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+const API = `${BACKEND_URL}/api`;
 
 const WorkPage = () => {
-  const [selected, setSelected] = useState({ region: [], industry: [], service: [] });
-  const [count, setCount] = useState(PAGE_SIZE);
-  const gridRef = useRef(null);
+  const [articles, setArticles] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
-  const filtered = useMemo(() => {
-    return PROJECTS.filter((p) => {
-      const okRegion =
-        selected.region.length === 0 || selected.region.includes(p.region);
-      const okIndustry =
-        selected.industry.length === 0 ||
-        p.industry.some((i) => selected.industry.includes(i));
-      const okService =
-        selected.service.length === 0 ||
-        p.services.some((s) => selected.service.includes(s));
-      return okRegion && okIndustry && okService;
-    });
-  }, [selected]);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [articleLoading, setArticleLoading] = useState(false);
+  const [activeArticle, setActiveArticle] = useState(null);
 
-  const visible = filtered.slice(0, count);
-  const activeChips = [
-    ...selected.region,
-    ...selected.industry,
-    ...selected.service,
-  ];
-
-  const removeChip = (value) => {
-    setSelected((prev) => ({
-      region: prev.region.filter((v) => v !== value),
-      industry: prev.industry.filter((v) => v !== value),
-      service: prev.service.filter((v) => v !== value),
-    }));
+  const fetchArticles = async () => {
+    setLoading(true);
+    setError(false);
+    try {
+      const res = await axios.get(`${API}/news/homepagina`);
+      setArticles(res.data?.items || []);
+    } catch (e) {
+      setError(true);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const pad2 = (n) => String(n).padStart(2, "0");
+  useEffect(() => {
+    fetchArticles();
+  }, []);
+
+  const openArticle = async (article) => {
+    setModalOpen(true);
+    setArticleLoading(true);
+    setActiveArticle(null);
+    try {
+      const res = await axios.get(`${API}/news/articles/${article.id}`);
+      setActiveArticle(res.data);
+    } catch (e) {
+      setActiveArticle(null);
+    } finally {
+      setArticleLoading(false);
+    }
+  };
+
+  const closeModal = () => setModalOpen(false);
 
   return (
     <div className="min-h-screen bg-white">
@@ -87,7 +94,7 @@ const WorkPage = () => {
             <div className="flex items-center gap-8 rounded-3xl bg-white/5 px-8 py-6 backdrop-blur">
               <div>
                 <div className="text-4xl font-extrabold tracking-tight">
-                  {String(filtered.length).padStart(2, "0")}
+                  {String(articles.length).padStart(2, "0")}
                 </div>
                 <div className="mt-1 text-xs uppercase tracking-[0.16em] text-white/60">
                   Projecten
@@ -104,64 +111,58 @@ const WorkPage = () => {
           </div>
         </section>
 
-        {/* Filter row */}
-        <div className="mt-10 flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+        {/* Section heading */}
+        <div className="mt-14 flex items-center justify-between">
           <h2 className="text-2xl font-bold tracking-tight text-neutral-900">
             Alle casestudy's
           </h2>
-          <FilterBar selected={selected} setSelected={setSelected} />
+          {!loading && !error && (
+            <span className="text-sm text-neutral-400">
+              {articles.length} {articles.length === 1 ? "item" : "items"}
+            </span>
+          )}
         </div>
-
-        {/* Active filter chips */}
-        {activeChips.length > 0 && (
-          <div className="mt-8 flex flex-wrap items-center gap-2">
-            {activeChips.map((chip) => (
-              <button
-                key={chip}
-                onClick={() => removeChip(chip)}
-                className="flex items-center gap-1.5 rounded-full border border-neutral-300 px-3 py-1.5 text-xs font-medium text-neutral-700 transition-colors hover:border-neutral-900 hover:text-neutral-900"
-              >
-                {chip}
-                <X size={13} />
-              </button>
-            ))}
-            <button
-              onClick={() => setSelected({ region: [], industry: [], service: [] })}
-              className="px-2 py-1.5 text-xs font-medium text-neutral-400 underline-offset-4 hover:text-neutral-900 hover:underline"
-            >
-              Alles wissen
-            </button>
-          </div>
-        )}
 
         {/* Grid */}
         <div
-          ref={gridRef}
           id="work-grid"
-          className="mt-14 grid grid-cols-1 gap-x-6 gap-y-14 sm:grid-cols-2 lg:mt-16 lg:grid-cols-3"
+          className="mt-10 grid grid-cols-1 gap-x-6 gap-y-14 sm:grid-cols-2 lg:mt-12 lg:grid-cols-3"
         >
-          {visible.map((p, i) => (
-            <ProjectCard key={p.id} project={p} index={i} />
-          ))}
+          {loading &&
+            Array.from({ length: 3 }).map((_, i) => (
+              <div key={i} className="animate-pulse">
+                <div className="aspect-square w-full rounded-3xl bg-neutral-100" />
+                <div className="mt-4 h-3 w-1/3 rounded-full bg-neutral-100" />
+                <div className="mt-2 h-5 w-2/3 rounded-full bg-neutral-100" />
+              </div>
+            ))}
+
+          {!loading &&
+            !error &&
+            articles.map((a, i) => (
+              <ArticleCard key={a.id} article={a} index={i} onOpen={openArticle} />
+            ))}
         </div>
 
-        {filtered.length === 0 && (
-          <div className="py-32 text-center">
-            <p className="text-lg text-neutral-400">
-              Geen projecten komen overeen met je filters.
+        {!loading && error && (
+          <div className="flex flex-col items-center gap-4 py-28 text-center">
+            <p className="text-lg text-neutral-500">
+              Kon de casestudy's niet laden.
             </p>
+            <button
+              onClick={fetchArticles}
+              className="inline-flex items-center gap-2 rounded-full border border-neutral-900 px-6 py-3 text-sm font-medium text-neutral-900 transition-colors hover:bg-neutral-900 hover:text-white"
+            >
+              <RotateCw size={15} /> Opnieuw proberen
+            </button>
           </div>
         )}
 
-        {/* Load more */}
-        {count < filtered.length && (
-          <div className="mt-20 flex justify-center">
-            <button
-              onClick={() => setCount((c) => c + PAGE_SIZE)}
-              className="rounded-full border border-neutral-900 px-8 py-3.5 text-sm font-medium text-neutral-900 transition-colors hover:bg-neutral-900 hover:text-white"
-            >
-              Meer laden
-            </button>
+        {!loading && !error && articles.length === 0 && (
+          <div className="py-28 text-center">
+            <p className="text-lg text-neutral-400">
+              Er zijn nog geen casestudy's beschikbaar.
+            </p>
           </div>
         )}
       </main>
@@ -169,6 +170,13 @@ const WorkPage = () => {
       <div className="mt-32">
         <Footer />
       </div>
+
+      <ArticleModal
+        open={modalOpen}
+        loading={articleLoading}
+        article={activeArticle}
+        onClose={closeModal}
+      />
     </div>
   );
 };

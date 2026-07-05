@@ -101,3 +101,48 @@
 #====================================================================================================
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
+
+user_problem_statement: "Test two new backend proxy endpoints in /app/backend/server.py that proxy the external DBNT news API. Endpoints: GET /api/news/homepagina and GET /api/news/articles/{article_id}"
+
+backend:
+  - task: "GET /api/news/homepagina endpoint"
+    implemented: true
+    working: true
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "✅ Endpoint tested successfully. Returns HTTP 200 with valid JSON containing 'items' array. Each item has required fields (id, title, category, published_at). The 'Catch It!' article was found with id: 898cf109-e3c4-40a7-9eac-df6204128969. CRITICAL BUG FOUND: logger is used on line 80 but defined on line 109 - will cause NameError if error path is triggered (network timeout, connection error, etc.)."
+
+  - task: "GET /api/news/articles/{article_id} endpoint"
+    implemented: true
+    working: true
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "✅ Endpoint tested successfully with valid article ID (898cf109-e3c4-40a7-9eac-df6204128969). Returns HTTP 200 with valid JSON containing 'title' and 'body' fields. Body contains HTML content (1493 chars). Also tested with invalid article ID (nonexistent-id-123) and confirmed graceful error handling (returns 502 Bad Gateway without crashing). CRITICAL BUG FOUND: logger is used on line 90 but defined on line 109 - will cause NameError if error path is triggered."
+
+metadata:
+  created_by: "testing_agent"
+  version: "1.0"
+  test_sequence: 1
+  run_ui: false
+
+test_plan:
+  current_focus:
+    - "GET /api/news/homepagina endpoint"
+    - "GET /api/news/articles/{article_id} endpoint"
+  stuck_tasks: []
+  test_all: false
+  test_priority: "high_first"
+
+agent_communication:
+  - agent: "testing"
+    message: "Completed testing of both DBNT news proxy endpoints. Both endpoints are working correctly for normal operations. However, discovered a CRITICAL bug: logger is used before it's defined (lines 80, 90 use logger, but it's defined on line 109). This will cause NameError if any network errors occur. The logger definition (lines 104-109) should be moved to before the route definitions (before line 73). This is a production-critical bug that needs immediate fix."

@@ -1,3 +1,60 @@
 .App {
     min-height: 100vh;
 }
+
+/* Article body (rendered HTML from DBNT news API) */
+.article-body {
+    color: #262626;
+    font-size: 1rem;
+    line-height: 1.75;
+}
+.article-body p {
+    margin: 0 0 1.1rem 0;
+}
+.article-body p:last-child {
+    margin-bottom: 0;
+}
+.article-body strong {
+    font-weight: 700;
+    color: #171717;
+}
+.article-body em {
+    font-style: italic;
+}
+.article-body a {
+    color: #171717;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+.article-body h1,
+.article-body h2,
+.article-body h3 {
+    font-weight: 700;
+    color: #171717;
+    line-height: 1.25;
+    margin: 1.6rem 0 0.8rem 0;
+}
+.article-body h2 { font-size: 1.4rem; }
+.article-body h3 { font-size: 1.2rem; }
+.article-body ul,
+.article-body ol {
+    margin: 0 0 1.1rem 1.25rem;
+    padding-left: 0.5rem;
+}
+.article-body li {
+    margin-bottom: 0.4rem;
+    list-style: disc;
+}
+.article-body ol li {
+    list-style: decimal;
+}
+.article-body img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 1rem;
+    margin: 1.2rem 0;
+}
+.article-body .clara-image-credit {
+    font-size: 0.8rem;
+    color: #a3a3a3;
+}

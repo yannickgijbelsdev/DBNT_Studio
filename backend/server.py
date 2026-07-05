@@ -1,4 +1,4 @@
-from fastapi import FastAPI, APIRouter
+from fastapi import FastAPI, APIRouter, HTTPException
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -8,6 +8,7 @@ from pathlib import Path
 from pydantic import BaseModel, Field, ConfigDict
 from typing import List
 import uuid
+import requests
 from datetime import datetime, timezone
 
 
@@ -65,6 +66,29 @@ async def get_status_checks():
             check['timestamp'] = datetime.fromisoformat(check['timestamp'])
     
     return status_checks
+
+# ---- DBNT News API proxy (avoids browser mixed-content / CORS on HTTP source) ----
+NEWS_BASE = "http://clr.koodh.com/api/news"
+
+@api_router.get("/news/homepagina")
+def get_news_homepagina():
+    try:
+        r = requests.get(f"{NEWS_BASE}/dbnt/homepagina", timeout=25, allow_redirects=True)
+        r.raise_for_status()
+        return r.json()
+    except requests.RequestException as e:
+        logger.error(f"News homepagina fetch failed: {e}")
+        raise HTTPException(status_code=502, detail="Kon nieuws niet ophalen")
+
+@api_router.get("/news/articles/{article_id}")
+def get_news_article(article_id: str):
+    try:
+        r = requests.get(f"{NEWS_BASE}/articles/{article_id}", timeout=25, allow_redirects=True)
+        r.raise_for_status()
+        return r.json()
+    except requests.RequestException as e:
+        logger.error(f"News article fetch failed: {e}")
+        raise HTTPException(status_code=502, detail="Kon artikel niet ophalen")
 
 # Include the router in the main app
 app.include_router(api_router)
