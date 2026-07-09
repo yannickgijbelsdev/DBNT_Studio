@@ -4,6 +4,7 @@ import axios from "axios";
 import { ArrowLeft, Loader2, RotateCw } from "lucide-react";
 import Header from "./Header";
 import Footer from "./Footer";
+import { setArticleSEO, resetSEO, stripHtml } from "../lib/seo";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
@@ -53,6 +54,24 @@ const ArticlePage = () => {
     fetchArticle();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
+
+  // Per-article SEO (title, description, keywords, OG/Twitter, JSON-LD)
+  useEffect(() => {
+    if (!article) return;
+    const extraKeywords = [
+      article.title,
+      article.category?.name,
+      ...(article.tags || []).map((t) => (typeof t === "string" ? t : t?.name)),
+    ].filter(Boolean);
+    setArticleSEO({
+      title: article.title,
+      description: article.excerpt || stripHtml(article.body),
+      keywords: extraKeywords,
+      image: article.image_url,
+      url: `${window.location.origin}/artikel/${id}`,
+    });
+    return () => resetSEO();
+  }, [article, id]);
 
   const goBack = () => {
     if (window.history.length > 1) navigate(-1);
