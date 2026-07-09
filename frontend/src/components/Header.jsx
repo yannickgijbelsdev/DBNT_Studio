@@ -10,16 +10,25 @@ const Header = () => {
   }, []);
 
   return (
-    <header
-      className="fixed inset-x-0 top-0 z-50"
-      style={{
-        background: scrolled ? "rgba(8,8,11,0.25)" : "rgba(8,8,11,0)",
-        backdropFilter: scrolled ? "blur(16px)" : "none",
-        WebkitBackdropFilter: scrolled ? "blur(16px)" : "none",
-        transition: "background 0.4s ease, backdrop-filter 0.4s ease",
-      }}
-    >
-      <div className="mx-auto flex h-[68px] max-w-[1600px] items-center px-6 lg:px-10">
+    <header className="fixed inset-x-0 top-0 z-50">
+      {/* soft, subtle blur that gently fades out toward the bottom (no hard bar edge) */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 h-28"
+        style={{
+          opacity: scrolled ? 1 : 0,
+          backdropFilter: "blur(6px)",
+          WebkitBackdropFilter: "blur(6px)",
+          background:
+            "linear-gradient(to bottom, rgba(8,8,11,0.32) 0%, rgba(8,8,11,0.10) 45%, rgba(8,8,11,0) 100%)",
+          WebkitMaskImage:
+            "linear-gradient(to bottom, black 0%, black 35%, transparent 100%)",
+          maskImage:
+            "linear-gradient(to bottom, black 0%, black 35%, transparent 100%)",
+          transition: "opacity 0.55s ease",
+        }}
+      />
+      <div className="relative mx-auto flex h-[68px] max-w-[1600px] items-center px-6 lg:px-10">
         <a href="/" className="select-none">
           <img
             src="https://customer-assets.emergentagent.com/job_agency-showcase-212/artifacts/ri8ebb60_Logo-black-1.png"
