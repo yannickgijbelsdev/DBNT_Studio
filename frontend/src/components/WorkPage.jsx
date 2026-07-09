@@ -37,7 +37,7 @@ const WorkPage = () => {
 
       <main className="mx-auto max-w-[1600px] px-6 pt-28 lg:px-10 lg:pt-32">
         {/* Banner: full photo */}
-        <section className="h-[48vh] max-h-[520px] min-h-[260px] overflow-hidden rounded-[2rem] bg-neutral-100 lg:rounded-[2.5rem]">
+        <section className="h-[56vh] max-h-[600px] min-h-[300px] overflow-hidden rounded-[2rem] bg-neutral-100 lg:rounded-[2.5rem]">
           <img
             src="https://customer-assets.emergentagent.com/job_agency-showcase-212/artifacts/9or15fru_DBNT_STUDIO_BANNER.png"
             alt="DBNT Studio"
