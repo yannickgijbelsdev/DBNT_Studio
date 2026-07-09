@@ -13,6 +13,37 @@ body {
     background-color: #08080b;
 }
 
+/* Legal pages (Terms / Cookie policy) */
+.legal-content h2 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-top: 2rem;
+}
+.legal-content p {
+    color: #d4d4d8;
+    line-height: 1.75;
+    margin-top: 0.7rem;
+}
+.legal-content ul {
+    list-style: disc;
+    margin: 0.7rem 0 0 1.25rem;
+    color: #d4d4d8;
+    line-height: 1.7;
+}
+.legal-content li {
+    margin-top: 0.35rem;
+}
+.legal-content strong {
+    color: #ffffff;
+    font-weight: 600;
+}
+.legal-content a {
+    color: #ffffff;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
 /* Banner person cut-out: gentle entrance + continuous float */
 @keyframes bannerPersonIn {
     0% {

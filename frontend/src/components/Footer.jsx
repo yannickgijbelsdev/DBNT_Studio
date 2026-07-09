@@ -1,5 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Download, Mail } from "lucide-react";
+import { openCookieSettings } from "../lib/consent";
 
 // NOTE: upload the actual CV to /app/frontend/public/ with this filename to make the download work.
 const CV_URL = "/cv-deborah-baeten.pdf";
@@ -32,6 +34,31 @@ const Footer = () => {
             />
             Download mijn cv
           </a>
+
+          {/* Legal links */}
+          <div className="mt-2 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-xs text-white/40">
+            <Link
+              to="/algemene-voorwaarden"
+              className="transition-colors hover:text-white/80"
+            >
+              Algemene voorwaarden
+            </Link>
+            <span aria-hidden>·</span>
+            <Link
+              to="/cookiebeleid"
+              className="transition-colors hover:text-white/80"
+            >
+              Cookiebeleid
+            </Link>
+            <span aria-hidden>·</span>
+            <button
+              type="button"
+              onClick={openCookieSettings}
+              className="transition-colors hover:text-white/80"
+            >
+              Cookievoorkeuren
+            </button>
+          </div>
         </div>
 
         {/* Koodh credit, small, bottom-right */}
