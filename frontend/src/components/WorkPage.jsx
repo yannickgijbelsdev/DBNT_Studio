@@ -35,13 +35,17 @@ const WorkPage = () => {
     <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-violet-100">
       <Header />
 
-      <main className="mx-auto max-w-[1600px] px-6 pt-28 lg:px-10 lg:pt-32">
-        {/* Banner image (no text / no buttons) - height constrained */}
-        <section className="h-[52vh] max-h-[560px] min-h-[260px] overflow-hidden rounded-[2rem] bg-gradient-to-br from-pink-500 to-violet-600 lg:rounded-[2.5rem]">
+      <main className="mx-auto max-w-[1600px] px-6 pt-36 lg:px-10 lg:pt-44">
+        {/* Banner: brand gradient with Deborah popping out the top */}
+        <section className="relative">
+          <div className="relative h-[220px] overflow-hidden rounded-[2rem] bg-gradient-to-br from-pink-500 via-fuchsia-500 to-violet-600 sm:h-[260px] lg:h-[340px] lg:rounded-[2.5rem]">
+            <div className="pointer-events-none absolute -right-16 -top-24 h-72 w-72 rounded-full bg-white/15 blur-3xl" />
+            <div className="pointer-events-none absolute -bottom-28 -left-12 h-80 w-80 rounded-full bg-white/10 blur-3xl" />
+          </div>
           <img
-            src="https://customer-assets.emergentagent.com/job_agency-showcase-212/artifacts/7uq26iwn_Deborah%20Baeten-Dit-Ben-Ik.webp"
+            src="/deborah-cutout.png"
             alt="Deborah Baeten"
-            className="h-full w-full object-cover object-[center_42%]"
+            className="banner-person pointer-events-none absolute bottom-0 left-1/2 h-[280px] object-contain sm:h-[330px] lg:h-[430px]"
           />
         </section>
 

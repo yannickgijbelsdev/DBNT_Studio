@@ -2,6 +2,39 @@
     min-height: 100vh;
 }
 
+/* Banner person cut-out: gentle entrance + continuous float */
+@keyframes bannerPersonIn {
+    0% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(28px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+@keyframes bannerPersonFloat {
+    0%,
+    100% {
+        transform: translateX(-50%) translateY(0);
+    }
+    50% {
+        transform: translateX(-50%) translateY(-12px);
+    }
+}
+.banner-person {
+    transform: translateX(-50%);
+    filter: drop-shadow(0 24px 30px rgba(80, 20, 90, 0.28));
+    animation: bannerPersonIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) both,
+        bannerPersonFloat 6s ease-in-out 1s infinite;
+    will-change: transform;
+}
+@media (prefers-reduced-motion: reduce) {
+    .banner-person {
+        animation: bannerPersonIn 0.6s ease both;
+    }
+}
+
 /* Article body (rendered HTML from DBNT news API) */
 .article-body {
     color: #262626;
