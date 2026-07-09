@@ -13,8 +13,9 @@ const Header = () => {
     <header
       className="fixed inset-x-0 top-0 z-50"
       style={{
-        background: scrolled ? "rgba(8,8,11,0.72)" : "rgba(8,8,11,0)",
-        backdropFilter: scrolled ? "blur(12px)" : "none",
+        background: scrolled ? "rgba(8,8,11,0.25)" : "rgba(8,8,11,0)",
+        backdropFilter: scrolled ? "blur(16px)" : "none",
+        WebkitBackdropFilter: scrolled ? "blur(16px)" : "none",
         transition: "background 0.4s ease, backdrop-filter 0.4s ease",
       }}
     >
