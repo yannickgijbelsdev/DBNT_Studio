@@ -3,6 +3,7 @@ import axios from "axios";
 import { RotateCw } from "lucide-react";
 import Header from "./Header";
 import ArticleCard from "./ArticleCard";
+import Reveal from "./Reveal";
 import Footer from "./Footer";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
@@ -36,7 +37,7 @@ const WorkPage = () => {
 
       <main className="mx-auto max-w-[1600px] px-6 pt-28 lg:px-10 lg:pt-32">
         {/* Banner image (no text / no buttons) - height constrained */}
-        <section className="h-[42vh] max-h-[460px] min-h-[220px] overflow-hidden rounded-[2rem] bg-gradient-to-br from-pink-500 to-violet-600 lg:rounded-[2.5rem]">
+        <section className="h-[52vh] max-h-[560px] min-h-[260px] overflow-hidden rounded-[2rem] bg-gradient-to-br from-pink-500 to-violet-600 lg:rounded-[2.5rem]">
           <img
             src="https://customer-assets.emergentagent.com/job_agency-showcase-212/artifacts/7uq26iwn_Deborah%20Baeten-Dit-Ben-Ik.webp"
             alt="Deborah Baeten"
@@ -45,7 +46,7 @@ const WorkPage = () => {
         </section>
 
         {/* Section heading */}
-        <div className="mt-14 flex items-center justify-between">
+        <Reveal className="mt-14 flex items-center justify-between">
           <h2 className="text-2xl font-bold tracking-tight text-neutral-900">
             Alle casestudy's
           </h2>
@@ -54,7 +55,7 @@ const WorkPage = () => {
               {articles.length} {articles.length === 1 ? "item" : "items"}
             </span>
           )}
-        </div>
+        </Reveal>
 
         {/* Grid */}
         <div
