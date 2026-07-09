@@ -57,17 +57,20 @@ const ArticleCard = ({ article, index }) => {
             </span>
           </div>
         )}
-      </div>
 
-      <div className="mt-4">
-        <p className="text-lg font-medium leading-snug tracking-tight text-neutral-900 transition-opacity group-hover:opacity-70">
-          {article.title}
-        </p>
-        {article.excerpt && (
-          <p className="mt-1 line-clamp-2 text-sm text-neutral-500">
-            {article.excerpt}
-          </p>
-        )}
+        {/* Title overlay with frosted/blurry background */}
+        <div className="absolute inset-x-0 bottom-0 p-4">
+          <div className="rounded-2xl border border-white/20 bg-black/25 px-4 py-3 backdrop-blur-md">
+            <p className="text-lg font-semibold leading-snug tracking-tight text-white">
+              {article.title}
+            </p>
+            {article.excerpt && (
+              <p className="mt-1 line-clamp-2 text-sm text-white/80">
+                {article.excerpt}
+              </p>
+            )}
+          </div>
+        </div>
       </div>
     </button>
   );

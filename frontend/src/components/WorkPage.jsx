@@ -48,7 +48,7 @@ const WorkPage = () => {
         {/* Section heading */}
         <Reveal className="mt-14 flex items-center justify-between">
           <h2 className="text-2xl font-bold tracking-tight text-neutral-900">
-            Alle casestudy's
+            Mijn creatieve brein
           </h2>
           {!loading && !error && (
             <span className="text-sm text-neutral-400">
