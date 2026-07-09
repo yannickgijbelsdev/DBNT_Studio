@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Test two new backend proxy endpoints in /app/backend/server.py that proxy the external DBNT news API. Endpoints: GET /api/news/homepagina and GET /api/news/articles/{article_id}"
+user_problem_statement: "Verify dark-mode UI fixes on DBNT site homepage: 1) Section heading 'Mijn creatieve brein' in WHITE, 2) Item counter removed, 3) Banner tagline 'Design Beyond Thinking' in bottom-left with white text and Anton font, 4) Background gradient present with dark theme"
 
 backend:
   - task: "GET /api/news/homepagina endpoint"
@@ -129,20 +129,97 @@ backend:
         agent: "testing"
         comment: "✅ Endpoint tested successfully with valid article ID (898cf109-e3c4-40a7-9eac-df6204128969). Returns HTTP 200 with valid JSON containing 'title' and 'body' fields. Body contains HTML content (1493 chars). Also tested with invalid article ID (nonexistent-id-123) and confirmed graceful error handling (returns 502 Bad Gateway without crashing). CRITICAL BUG FOUND: logger is used on line 90 but defined on line 109 - will cause NameError if error path is triggered."
 
+frontend:
+  - task: "Section heading 'Mijn creatieve brein' color - must be WHITE"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/components/WorkPage.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "✅ VERIFIED: Section heading renders in pure white rgb(255, 255, 255). The h2 element with text 'Mijn creatieve brein' has correct text-white Tailwind class and computed color is exactly rgb(255, 255, 255)."
+
+  - task: "Item counter removed - no '1 item' or 'N items' text"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/components/WorkPage.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "✅ VERIFIED: No item counter text found anywhere on the page. Searched for patterns like '1 item', '2 items', 'items: N' etc. and found none. The heading section only contains the heading text without any counter."
+
+  - task: "Banner tagline 'Design Beyond Thinking' - bottom-left, white, Anton font"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/components/WorkPage.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "✅ VERIFIED: Banner tagline is correctly implemented. Color: rgb(255, 255, 255) WHITE ✅, Font-family: 'Anton, Inter, sans-serif' ✅, Position: Visually confirmed in bottom-left corner of banner (x=240px accounting for left padding, y=652px near bottom of banner section) ✅. The .brand-tagline class correctly applies Anton font from App.css."
+
+  - task: "Background gradient - fixed dark background with radial glows"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/components/MouseGradient.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "✅ VERIFIED: Background gradient is correctly implemented. Position: fixed ✅, Background color: rgb(8, 8, 11) DARK ✅, Contains radial-gradient: YES (433 chars of gradient CSS) ✅. Mouse movement tracking works without errors. The MouseGradient component creates a fixed full-screen background with purple/pink radial glows that follow the cursor."
+
+  - task: "No console errors on page load"
+    implemented: true
+    working: true
+    file: "/app/frontend/src"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "✅ VERIFIED: No console errors detected on page load. Only one info message from React DevTools. Application loads cleanly without any JavaScript errors."
+
+  - task: "Article card 'Catch It!' clickable and navigates to article page"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/components/ArticleCard.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "✅ VERIFIED: Article card navigation works correctly. Clicking 'Catch It!' card navigates to /artikel/898cf109-e3c4-40a7-9eac-df6204128969. Article page loads with title, image, content, and 'Terug' (back) button. Navigation flow is smooth and functional."
+
 metadata:
   created_by: "testing_agent"
   version: "1.0"
-  test_sequence: 1
-  run_ui: false
+  test_sequence: 2
+  run_ui: true
 
 test_plan:
   current_focus:
-    - "GET /api/news/homepagina endpoint"
-    - "GET /api/news/articles/{article_id} endpoint"
+    - "Section heading 'Mijn creatieve brein' color - must be WHITE"
+    - "Item counter removed - no '1 item' or 'N items' text"
+    - "Banner tagline 'Design Beyond Thinking' - bottom-left, white, Anton font"
+    - "Background gradient - fixed dark background with radial glows"
+    - "No console errors on page load"
+    - "Article card 'Catch It!' clickable and navigates to article page"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
 
 agent_communication:
   - agent: "testing"
-    message: "Completed testing of both DBNT news proxy endpoints. Both endpoints are working correctly for normal operations. However, discovered a CRITICAL bug: logger is used before it's defined (lines 80, 90 use logger, but it's defined on line 109). This will cause NameError if any network errors occur. The logger definition (lines 104-109) should be moved to before the route definitions (before line 73). This is a production-critical bug that needs immediate fix."
+    message: "Completed comprehensive UI testing of DBNT dark-mode fixes. ALL 6 TESTS PASSED ✅. The homepage correctly displays: (1) white section heading 'Mijn creatieve brein', (2) no item counter, (3) banner tagline 'Design Beyond Thinking' in bottom-left with white text and Anton font, (4) fixed dark background with radial gradients that follow mouse, (5) no console errors, (6) working article card navigation to /artikel/ pages with 'Terug' button. All dark-mode UI requirements are successfully implemented and verified."

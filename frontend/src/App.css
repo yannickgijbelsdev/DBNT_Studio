@@ -2,6 +2,13 @@
     min-height: 100vh;
 }
 
+.brand-tagline {
+    font-family: 'Anton', 'Inter', sans-serif;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+}
+
 body {
     background-color: #08080b;
 }

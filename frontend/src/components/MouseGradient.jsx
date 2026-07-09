@@ -34,7 +34,7 @@ const MouseGradient = () => {
         "--my": "28%",
         backgroundColor: "#08080b",
         backgroundImage:
-          "radial-gradient(700px circle at var(--mx) var(--my), rgba(139,92,246,0.22), transparent 60%), radial-gradient(900px circle at calc(100% - var(--mx)) calc(100% - var(--my)), rgba(236,72,153,0.16), transparent 60%)",
+          "radial-gradient(1200px circle at var(--mx) var(--my), rgba(139,92,246,0.20) 0%, rgba(139,92,246,0.10) 24%, rgba(139,92,246,0.03) 46%, transparent 68%), radial-gradient(1100px circle at calc(100% - var(--mx)) calc(100% - var(--my)), rgba(236,72,153,0.15) 0%, rgba(236,72,153,0.06) 28%, rgba(236,72,153,0.02) 50%, transparent 72%), radial-gradient(1600px circle at 50% -10%, rgba(99,80,190,0.12) 0%, transparent 60%), linear-gradient(180deg, #0b0b13 0%, #08080b 60%)",
       }}
     />
   );

@@ -37,24 +37,30 @@ const WorkPage = () => {
 
       <main className="mx-auto max-w-[1600px] px-6 pt-28 lg:px-10 lg:pt-32">
         {/* Banner: full photo */}
-        <section className="h-[56vh] max-h-[600px] min-h-[300px] overflow-hidden rounded-[2rem] bg-neutral-100 lg:rounded-[2.5rem]">
+        <section className="relative h-[56vh] max-h-[600px] min-h-[300px] overflow-hidden rounded-[2rem] bg-neutral-100 lg:rounded-[2.5rem]">
           <img
             src="https://customer-assets.emergentagent.com/job_agency-showcase-212/artifacts/9or15fru_DBNT_STUDIO_BANNER.png"
             alt="DBNT Studio"
             className="h-full w-full object-cover object-[center_30%]"
           />
+          {/* legibility gradient */}
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+          {/* brand tagline bottom-left */}
+          <div className="absolute bottom-6 left-6 lg:bottom-9 lg:left-10">
+            <span
+              className="brand-tagline block text-2xl leading-none text-white sm:text-3xl lg:text-4xl"
+              style={{ textShadow: "0 2px 16px rgba(0,0,0,0.55)" }}
+            >
+              Design Beyond Thinking
+            </span>
+          </div>
         </section>
 
         {/* Section heading */}
-        <Reveal className="mt-14 flex items-center justify-between">
-          <h2 className="text-2xl font-bold tracking-tight text-neutral-900">
+        <Reveal className="mt-14">
+          <h2 className="text-2xl font-bold tracking-tight text-white">
             Mijn creatieve brein
           </h2>
-          {!loading && !error && (
-            <span className="text-sm text-neutral-400">
-              {articles.length} {articles.length === 1 ? "item" : "items"}
-            </span>
-          )}
         </Reveal>
 
         {/* Grid */}
