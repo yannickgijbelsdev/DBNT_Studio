@@ -58,18 +58,29 @@ const ArticleCard = ({ article, index }) => {
           </div>
         )}
 
-        {/* Title overlay with frosted/blurry background */}
-        <div className="absolute inset-x-0 bottom-0 p-4">
-          <div className="rounded-2xl border border-white/20 bg-black/25 px-4 py-3 backdrop-blur-md">
-            <p className="text-lg font-semibold leading-snug tracking-tight text-white">
-              {article.title}
+        {/* Blurred, darkened bottom of the photo (no box around title) */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-2/5 overflow-hidden rounded-b-3xl">
+          <div
+            className="absolute inset-0 backdrop-blur-md"
+            style={{
+              WebkitMaskImage:
+                "linear-gradient(to top, black 45%, transparent 100%)",
+              maskImage: "linear-gradient(to top, black 45%, transparent 100%)",
+            }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/20 to-transparent" />
+        </div>
+
+        {/* Title directly on the photo, no frame */}
+        <div className="absolute inset-x-0 bottom-0 p-5">
+          <p className="text-lg font-semibold leading-snug tracking-tight text-white drop-shadow-sm">
+            {article.title}
+          </p>
+          {article.excerpt && (
+            <p className="mt-1 line-clamp-2 text-sm text-white/80">
+              {article.excerpt}
             </p>
-            {article.excerpt && (
-              <p className="mt-1 line-clamp-2 text-sm text-white/80">
-                {article.excerpt}
-              </p>
-            )}
-          </div>
+          )}
         </div>
       </div>
     </button>
