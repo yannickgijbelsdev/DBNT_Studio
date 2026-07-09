@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { RotateCw } from "lucide-react";
+import { RotateCw, Download } from "lucide-react";
 import Header from "./Header";
 import ArticleCard from "./ArticleCard";
 import Reveal from "./Reveal";
@@ -54,6 +54,19 @@ const WorkPage = () => {
               Design Beyond Thinking
             </span>
           </div>
+
+          {/* CV download button bottom-right */}
+          <a
+            href="/cv-deborah-baeten.pdf"
+            download
+            className="group absolute bottom-6 right-6 inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-medium text-neutral-900 shadow-lg transition-colors hover:bg-neutral-200 lg:bottom-9 lg:right-10"
+          >
+            <Download
+              size={16}
+              className="transition-transform group-hover:translate-y-0.5"
+            />
+            Download mijn cv
+          </a>
         </section>
 
         {/* Section heading */}
