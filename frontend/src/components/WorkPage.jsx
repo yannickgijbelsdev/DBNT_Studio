@@ -31,16 +31,16 @@ const WorkPage = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-violet-100">
       <Header />
 
       <main className="mx-auto max-w-[1600px] px-6 pt-28 lg:px-10 lg:pt-32">
-        {/* Banner image (no text / no buttons) */}
-        <section className="overflow-hidden rounded-[2rem] bg-gradient-to-br from-pink-500 to-violet-600 lg:rounded-[2.5rem]">
+        {/* Banner image (no text / no buttons) - height constrained */}
+        <section className="h-[42vh] max-h-[460px] min-h-[220px] overflow-hidden rounded-[2rem] bg-gradient-to-br from-pink-500 to-violet-600 lg:rounded-[2.5rem]">
           <img
             src="https://customer-assets.emergentagent.com/job_agency-showcase-212/artifacts/7uq26iwn_Deborah%20Baeten-Dit-Ben-Ik.webp"
             alt="Deborah Baeten"
-            className="h-full w-full object-cover"
+            className="h-full w-full object-cover object-[center_42%]"
           />
         </section>
 
