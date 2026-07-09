@@ -13,7 +13,7 @@ const Header = () => {
     <header
       className="fixed inset-x-0 top-0 z-50"
       style={{
-        background: scrolled ? "rgba(255,255,255,0.85)" : "rgba(255,255,255,0)",
+        background: scrolled ? "rgba(8,8,11,0.72)" : "rgba(8,8,11,0)",
         backdropFilter: scrolled ? "blur(12px)" : "none",
         transition: "background 0.4s ease, backdrop-filter 0.4s ease",
       }}
@@ -23,7 +23,7 @@ const Header = () => {
           <img
             src="https://customer-assets.emergentagent.com/job_agency-showcase-212/artifacts/ri8ebb60_Logo-black-1.png"
             alt="DBNT"
-            className="h-6 w-auto lg:h-7"
+            className="h-6 w-auto invert lg:h-7"
           />
         </a>
       </div>

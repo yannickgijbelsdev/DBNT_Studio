@@ -2,6 +2,10 @@
     min-height: 100vh;
 }
 
+body {
+    background-color: #08080b;
+}
+
 /* Banner person cut-out: gentle entrance + continuous float */
 @keyframes bannerPersonIn {
     0% {
@@ -35,9 +39,9 @@
     }
 }
 
-/* Article body (rendered HTML from DBNT news API) */
+/* Article body (rendered HTML from DBNT news API) - dark mode */
 .article-body {
-    color: #262626;
+    color: #d4d4d8;
     font-size: 1rem;
     line-height: 1.75;
 }
@@ -49,13 +53,13 @@
 }
 .article-body strong {
     font-weight: 700;
-    color: #171717;
+    color: #ffffff;
 }
 .article-body em {
     font-style: italic;
 }
 .article-body a {
-    color: #171717;
+    color: #ffffff;
     text-decoration: underline;
     text-underline-offset: 2px;
 }
@@ -63,7 +67,7 @@
 .article-body h2,
 .article-body h3 {
     font-weight: 700;
-    color: #171717;
+    color: #ffffff;
     line-height: 1.25;
     margin: 1.6rem 0 0.8rem 0;
 }

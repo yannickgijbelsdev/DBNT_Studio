@@ -60,13 +60,13 @@ const ArticlePage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="relative min-h-screen text-neutral-100">
       <Header />
 
       <main className="mx-auto max-w-3xl px-6 pt-28 lg:pt-32">
         <button
           onClick={goBack}
-          className="group mb-8 inline-flex items-center gap-2 rounded-full border border-neutral-300 px-5 py-2.5 text-sm font-medium text-neutral-800 transition-colors hover:border-neutral-900 hover:bg-neutral-900 hover:text-white"
+          className="group mb-8 inline-flex items-center gap-2 rounded-full border border-white/30 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-white hover:text-neutral-900"
         >
           <ArrowLeft
             size={16}
@@ -77,16 +77,16 @@ const ArticlePage = () => {
 
         {loading && (
           <div className="flex h-72 items-center justify-center">
-            <Loader2 className="h-7 w-7 animate-spin text-neutral-400" />
+            <Loader2 className="h-7 w-7 animate-spin text-white/40" />
           </div>
         )}
 
         {!loading && error && (
           <div className="flex flex-col items-center gap-4 py-24 text-center">
-            <p className="text-lg text-neutral-500">Kon dit artikel niet laden.</p>
+            <p className="text-lg text-white/70">Kon dit artikel niet laden.</p>
             <button
               onClick={fetchArticle}
-              className="inline-flex items-center gap-2 rounded-full border border-neutral-900 px-6 py-3 text-sm font-medium text-neutral-900 transition-colors hover:bg-neutral-900 hover:text-white"
+              className="inline-flex items-center gap-2 rounded-full border border-white/30 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-white hover:text-neutral-900"
             >
               <RotateCw size={15} /> Opnieuw proberen
             </button>
@@ -95,12 +95,12 @@ const ArticlePage = () => {
 
         {!loading && !error && article && (
           <article className="pb-24">
-            <h1 className="text-4xl font-extrabold leading-tight tracking-tight text-neutral-900 sm:text-5xl">
+            <h1 className="text-4xl font-extrabold leading-tight tracking-tight text-white sm:text-5xl">
               {article.title}
             </h1>
 
             {article.image_url && (
-              <div className="mt-8 aspect-[16/9] w-full overflow-hidden rounded-3xl bg-neutral-100">
+              <div className="mt-8 aspect-[16/9] w-full overflow-hidden rounded-3xl bg-white/10">
                 <img
                   src={article.image_url}
                   alt={article.title}

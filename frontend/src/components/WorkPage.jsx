@@ -32,7 +32,7 @@ const WorkPage = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-violet-100">
+    <div className="relative min-h-screen text-neutral-100">
       <Header />
 
       <main className="mx-auto max-w-[1600px] px-6 pt-28 lg:px-10 lg:pt-32">
@@ -65,9 +65,9 @@ const WorkPage = () => {
           {loading &&
             Array.from({ length: 3 }).map((_, i) => (
               <div key={i} className="animate-pulse">
-                <div className="aspect-square w-full rounded-3xl bg-neutral-100" />
-                <div className="mt-4 h-3 w-1/3 rounded-full bg-neutral-100" />
-                <div className="mt-2 h-5 w-2/3 rounded-full bg-neutral-100" />
+                <div className="aspect-square w-full rounded-3xl bg-white/10" />
+                <div className="mt-4 h-3 w-1/3 rounded-full bg-white/10" />
+                <div className="mt-2 h-5 w-2/3 rounded-full bg-white/10" />
               </div>
             ))}
 
@@ -80,12 +80,12 @@ const WorkPage = () => {
 
         {!loading && error && (
           <div className="flex flex-col items-center gap-4 py-28 text-center">
-            <p className="text-lg text-neutral-500">
+            <p className="text-lg text-white/70">
               Kon de casestudy's niet laden.
             </p>
             <button
               onClick={fetchArticles}
-              className="inline-flex items-center gap-2 rounded-full border border-neutral-900 px-6 py-3 text-sm font-medium text-neutral-900 transition-colors hover:bg-neutral-900 hover:text-white"
+              className="inline-flex items-center gap-2 rounded-full border border-white/30 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-white hover:text-neutral-900"
             >
               <RotateCw size={15} /> Opnieuw proberen
             </button>
@@ -94,7 +94,7 @@ const WorkPage = () => {
 
         {!loading && !error && articles.length === 0 && (
           <div className="py-28 text-center">
-            <p className="text-lg text-neutral-400">
+            <p className="text-lg text-white/50">
               Er zijn nog geen casestudy's beschikbaar.
             </p>
           </div>
@@ -109,4 +109,3 @@ const WorkPage = () => {
 };
 
 export default WorkPage;
-
