@@ -29,12 +29,6 @@ const LegalLayout = ({ title, updated, children }) => {
         )}
 
         <div className="legal-content mt-10 pb-24">{children}</div>
-
-        <p className="mb-16 rounded-2xl border border-white/10 bg-white/[0.03] p-4 text-xs leading-relaxed text-white/45">
-          Deze tekst is een algemeen sjabloon en vormt geen juridisch advies. Laat
-          de definitieve voorwaarden nakijken door een jurist en vul de bedrijfs-
-          en contactgegevens correct aan.
-        </p>
       </main>
       <Footer />
     </div>
