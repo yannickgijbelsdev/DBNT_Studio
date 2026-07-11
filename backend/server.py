@@ -76,12 +76,21 @@ async def get_status_checks():
     return status_checks
 
 # ---- DBNT News API proxy (avoids browser mixed-content / CORS on HTTP source) ----
-NEWS_BASE = "http://clr.koodh.com/api/news"
+NEWS_BASE = "https://clr.koodh.com/api/news"
+NEWS_HEADERS = {
+    "User-Agent": "Mozilla/5.0 (compatible; DBNT-Site/1.0; +https://dbnt.studio)",
+    "Accept": "application/json",
+}
 
 @api_router.get("/news/homepagina")
 def get_news_homepagina():
     try:
-        r = requests.get(f"{NEWS_BASE}/dbnt/homepagina", timeout=25, allow_redirects=True)
+        r = requests.get(
+            f"{NEWS_BASE}/dbnt/homepagina",
+            timeout=25,
+            allow_redirects=True,
+            headers=NEWS_HEADERS,
+        )
         r.raise_for_status()
         return r.json()
     except requests.RequestException as e:
@@ -91,7 +100,12 @@ def get_news_homepagina():
 @api_router.get("/news/articles/{article_id}")
 def get_news_article(article_id: str):
     try:
-        r = requests.get(f"{NEWS_BASE}/articles/{article_id}", timeout=25, allow_redirects=True)
+        r = requests.get(
+            f"{NEWS_BASE}/articles/{article_id}",
+            timeout=25,
+            allow_redirects=True,
+            headers=NEWS_HEADERS,
+        )
         r.raise_for_status()
         return r.json()
     except requests.RequestException as e:

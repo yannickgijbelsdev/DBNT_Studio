@@ -6,7 +6,7 @@ import ArticleCard from "./ArticleCard";
 import Reveal from "./Reveal";
 import Footer from "./Footer";
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || "";
 const API = `${BACKEND_URL}/api`;
 
 const WorkPage = () => {

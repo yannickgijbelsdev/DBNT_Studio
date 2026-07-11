@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Verify dark-mode UI fixes on DBNT site homepage: 1) Section heading 'Mijn creatieve brein' in WHITE, 2) Item counter removed, 3) Banner tagline 'Design Beyond Thinking' in bottom-left with white text and Anton font, 4) Background gradient present with dark theme"
+user_problem_statement: "Verify news/case-studies loading on DBNT site: 1) Homepage section 'Mijn creatieve brein' shows project cards (not error message), 2) API /api/news/homepagina returns HTTP 200 with items array, 3) Article page loads when clicking card with title, body, and 'Terug' button, 4) No console errors related to news fetch"
 
 backend:
   - task: "GET /api/news/homepagina endpoint"
@@ -116,6 +116,9 @@ backend:
       - working: true
         agent: "testing"
         comment: "✅ Endpoint tested successfully. Returns HTTP 200 with valid JSON containing 'items' array. Each item has required fields (id, title, category, published_at). The 'Catch It!' article was found with id: 898cf109-e3c4-40a7-9eac-df6204128969. CRITICAL BUG FOUND: logger is used on line 80 but defined on line 109 - will cause NameError if error path is triggered (network timeout, connection error, etc.)."
+      - working: true
+        agent: "testing"
+        comment: "✅ RE-VERIFIED (2026-07-11): API endpoint returns HTTP 200 with 'items' array containing 3 items. First item: 'Norah' (id: af7e4159-41d8-4d6c-bad9-787427868272). Endpoint is functioning correctly for news/case-studies loading verification."
 
   - task: "GET /api/news/articles/{article_id} endpoint"
     implemented: true
@@ -128,14 +131,65 @@ backend:
       - working: true
         agent: "testing"
         comment: "✅ Endpoint tested successfully with valid article ID (898cf109-e3c4-40a7-9eac-df6204128969). Returns HTTP 200 with valid JSON containing 'title' and 'body' fields. Body contains HTML content (1493 chars). Also tested with invalid article ID (nonexistent-id-123) and confirmed graceful error handling (returns 502 Bad Gateway without crashing). CRITICAL BUG FOUND: logger is used on line 90 but defined on line 109 - will cause NameError if error path is triggered."
+      - working: true
+        agent: "testing"
+        comment: "✅ RE-VERIFIED (2026-07-11): API endpoint returns HTTP 200 for article ID af7e4159-41d8-4d6c-bad9-787427868272 ('Norah'). Article data loads correctly with title and body content. Endpoint is functioning correctly."
 
 frontend:
-  - task: "Section heading 'Mijn creatieve brein' color - must be WHITE"
+  - task: "Homepage news/case-studies cards load in 'Mijn creatieve brein' section"
     implemented: true
     working: true
     file: "/app/frontend/src/components/WorkPage.jsx"
     stuck_count: 0
     priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "✅ VERIFIED (2026-07-11): Homepage section 'Mijn creatieve brein' successfully loads 3 case-study cards: 'Norah', middle card, and 'catch it!'. Each card has an image and white title overlay (rgb(255, 255, 255)). No error message 'Kon de casestudy's niet laden.' is shown. Cards render correctly after API call to /api/news/homepagina."
+
+  - task: "No error message shown when case-studies load"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/components/WorkPage.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "✅ VERIFIED (2026-07-11): Error message 'Kon de casestudy's niet laden.' is NOT displayed. The error handling logic is working correctly - when API succeeds, cards are shown instead of error message."
+
+  - task: "Article page loads with title, body, and 'Terug' button"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/components/ArticleCard.jsx, /app/frontend/src/components/ArticlePage.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "✅ VERIFIED (2026-07-11): Clicking article card 'Norah' navigates to /artikel/af7e4159-41d8-4d6c-bad9-787427868272. Article page loads successfully with: (1) h1 title 'Norah' visible, (2) article body content (7 elements), (3) 'Terug' back button present. API call to /api/news/articles/{id} returns HTTP 200."
+
+  - task: "No console errors related to news fetch"
+    implemented: true
+    working: true
+    file: "/app/frontend/src"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "✅ VERIFIED (2026-07-11): No console errors detected during news/case-studies loading. Total console errors: 0. Application loads and navigates without any JavaScript errors related to news fetch, API calls, or network requests."
+
+  - task: "Section heading 'Mijn creatieve brein' color - must be WHITE"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/components/WorkPage.jsx"
+    stuck_count: 0
+    priority: "medium"
     needs_retesting: false
     status_history:
       - working: true
@@ -147,7 +201,7 @@ frontend:
     working: true
     file: "/app/frontend/src/components/WorkPage.jsx"
     stuck_count: 0
-    priority: "high"
+    priority: "medium"
     needs_retesting: false
     status_history:
       - working: true
@@ -159,7 +213,7 @@ frontend:
     working: true
     file: "/app/frontend/src/components/WorkPage.jsx"
     stuck_count: 0
-    priority: "high"
+    priority: "medium"
     needs_retesting: false
     status_history:
       - working: true
@@ -171,7 +225,7 @@ frontend:
     working: true
     file: "/app/frontend/src/components/MouseGradient.jsx"
     stuck_count: 0
-    priority: "high"
+    priority: "medium"
     needs_retesting: false
     status_history:
       - working: true
@@ -183,7 +237,7 @@ frontend:
     working: true
     file: "/app/frontend/src"
     stuck_count: 0
-    priority: "high"
+    priority: "medium"
     needs_retesting: false
     status_history:
       - working: true
@@ -195,7 +249,7 @@ frontend:
     working: true
     file: "/app/frontend/src/components/ArticleCard.jsx"
     stuck_count: 0
-    priority: "high"
+    priority: "medium"
     needs_retesting: false
     status_history:
       - working: true
@@ -204,18 +258,16 @@ frontend:
 
 metadata:
   created_by: "testing_agent"
-  version: "1.0"
-  test_sequence: 2
+  version: "1.1"
+  test_sequence: 3
   run_ui: true
 
 test_plan:
   current_focus:
-    - "Section heading 'Mijn creatieve brein' color - must be WHITE"
-    - "Item counter removed - no '1 item' or 'N items' text"
-    - "Banner tagline 'Design Beyond Thinking' - bottom-left, white, Anton font"
-    - "Background gradient - fixed dark background with radial glows"
-    - "No console errors on page load"
-    - "Article card 'Catch It!' clickable and navigates to article page"
+    - "Homepage news/case-studies cards load in 'Mijn creatieve brein' section"
+    - "No error message shown when case-studies load"
+    - "Article page loads with title, body, and 'Terug' button"
+    - "No console errors related to news fetch"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
@@ -223,3 +275,5 @@ test_plan:
 agent_communication:
   - agent: "testing"
     message: "Completed comprehensive UI testing of DBNT dark-mode fixes. ALL 6 TESTS PASSED ✅. The homepage correctly displays: (1) white section heading 'Mijn creatieve brein', (2) no item counter, (3) banner tagline 'Design Beyond Thinking' in bottom-left with white text and Anton font, (4) fixed dark background with radial gradients that follow mouse, (5) no console errors, (6) working article card navigation to /artikel/ pages with 'Terug' button. All dark-mode UI requirements are successfully implemented and verified."
+  - agent: "testing"
+    message: "✅ NEWS/CASE-STUDIES LOADING VERIFICATION COMPLETE (2026-07-11): All 4 verification items PASSED. (1) Homepage section 'Mijn creatieve brein' displays 3 case-study cards (Norah, middle card, catch it!) with images and white title overlays - NO error message shown. (2) API /api/news/homepagina returns HTTP 200 with 'items' array containing 3 items. (3) Clicking 'Norah' card navigates to /artikel/{id} and loads article page with h1 title, body content, and 'Terug' button. API /api/news/articles/{id} returns HTTP 200. (4) Zero console errors related to news fetch. The reported bug is RESOLVED - case-studies load correctly without showing 'Kon de casestudy's niet laden.' error."

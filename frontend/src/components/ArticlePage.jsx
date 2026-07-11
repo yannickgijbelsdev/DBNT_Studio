@@ -6,7 +6,7 @@ import Header from "./Header";
 import Footer from "./Footer";
 import { setArticleSEO, resetSEO, stripHtml } from "../lib/seo";
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || "";
 const API = `${BACKEND_URL}/api`;
 
 // Labels whose paragraphs must be removed from the article body.
