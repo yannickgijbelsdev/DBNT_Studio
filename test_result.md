@@ -119,6 +119,9 @@ backend:
       - working: true
         agent: "testing"
         comment: "✅ RE-VERIFIED (2026-07-11): API endpoint returns HTTP 200 with 'items' array containing 3 items. First item: 'Norah' (id: af7e4159-41d8-4d6c-bad9-787427868272). Endpoint is functioning correctly for news/case-studies loading verification."
+      - working: true
+        agent: "testing"
+        comment: "✅ RE-VERIFIED (2026-01-20): Backend changes verified - HTTPS upstream (https://clr.koodh.com), User-Agent header, 15s timeout. Returns HTTP 200 with 'items' array containing 4 items. First item: 'Koodh' (id: 0d88f1a2-9e7c-4335-9a20-1fe9797a3126). No regressions, no server errors. Previous logger bug is FIXED (logger now defined at line 30 before use)."
 
   - task: "GET /api/news/articles/{article_id} endpoint"
     implemented: true
@@ -134,6 +137,21 @@ backend:
       - working: true
         agent: "testing"
         comment: "✅ RE-VERIFIED (2026-07-11): API endpoint returns HTTP 200 for article ID af7e4159-41d8-4d6c-bad9-787427868272 ('Norah'). Article data loads correctly with title and body content. Endpoint is functioning correctly."
+      - working: true
+        agent: "testing"
+        comment: "✅ RE-VERIFIED (2026-01-20): Backend changes verified - HTTPS upstream (https://clr.koodh.com), User-Agent header, 15s timeout. Tested with article ID 0d88f1a2-9e7c-4335-9a20-1fe9797a3126 ('Koodh'). Returns HTTP 200 with 'title' and 'body' fields (303 chars). No regressions, no server errors. Previous logger bug is FIXED (logger now defined at line 30 before use)."
+
+  - task: "GET /api/news/health diagnostic endpoint (NEW)"
+    implemented: true
+    working: true
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "✅ NEW ENDPOINT VERIFIED (2026-01-20): Diagnostic endpoint /api/news/health returns HTTP 200 with all required keys: 'reachable' (true), 'status_code' (200), 'elapsed_ms' (371ms), 'items' (4), 'upstream' (https://clr.koodh.com/api/news/dbnt/homepagina). Does NOT throw 500. Endpoint successfully diagnoses upstream connectivity and provides detailed health metrics."
 
 frontend:
   - task: "Homepage news/case-studies cards load in 'Mijn creatieve brein' section"
@@ -258,8 +276,8 @@ frontend:
 
 metadata:
   created_by: "testing_agent"
-  version: "1.1"
-  test_sequence: 3
+  version: "1.2"
+  test_sequence: 4
   run_ui: true
 
 test_plan:
@@ -277,3 +295,5 @@ agent_communication:
     message: "Completed comprehensive UI testing of DBNT dark-mode fixes. ALL 6 TESTS PASSED ✅. The homepage correctly displays: (1) white section heading 'Mijn creatieve brein', (2) no item counter, (3) banner tagline 'Design Beyond Thinking' in bottom-left with white text and Anton font, (4) fixed dark background with radial gradients that follow mouse, (5) no console errors, (6) working article card navigation to /artikel/ pages with 'Terug' button. All dark-mode UI requirements are successfully implemented and verified."
   - agent: "testing"
     message: "✅ NEWS/CASE-STUDIES LOADING VERIFICATION COMPLETE (2026-07-11): All 4 verification items PASSED. (1) Homepage section 'Mijn creatieve brein' displays 3 case-study cards (Norah, middle card, catch it!) with images and white title overlays - NO error message shown. (2) API /api/news/homepagina returns HTTP 200 with 'items' array containing 3 items. (3) Clicking 'Norah' card navigates to /artikel/{id} and loads article page with h1 title, body content, and 'Terug' button. API /api/news/articles/{id} returns HTTP 200. (4) Zero console errors related to news fetch. The reported bug is RESOLVED - case-studies load correctly without showing 'Kon de casestudy's niet laden.' error."
+  - agent: "testing"
+    message: "✅ DBNT NEWS PROXY BACKEND CHANGES VERIFIED (2026-01-20): All 4 test items PASSED (20/20 individual checks). (1) GET /api/news/homepagina returns HTTP 200 with 'items' array (4 items), captured ID: 0d88f1a2-9e7c-4335-9a20-1fe9797a3126. (2) GET /api/news/health (NEW diagnostic endpoint) returns HTTP 200 with all required keys: reachable=true, status_code=200, elapsed_ms=371, items=4, upstream=https://clr.koodh.com/api/news/dbnt/homepagina. Does NOT throw 500. (3) GET /api/news/articles/{id} returns HTTP 200 with 'title' and 'body' fields. (4) No regressions or server errors in backend logs. Backend changes confirmed: HTTPS upstream (https://clr.koodh.com), User-Agent header present, 15s timeouts, NEW health endpoint working. Previous logger bug is FIXED."

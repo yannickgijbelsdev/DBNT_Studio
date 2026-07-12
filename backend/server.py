@@ -5,6 +5,7 @@ from motor.motor_asyncio import AsyncIOMotorClient
 import os
 import logging
 import hashlib
+import time
 from pathlib import Path
 from pydantic import BaseModel, Field, ConfigDict
 from typing import List
@@ -87,7 +88,7 @@ def get_news_homepagina():
     try:
         r = requests.get(
             f"{NEWS_BASE}/dbnt/homepagina",
-            timeout=25,
+            timeout=15,
             allow_redirects=True,
             headers=NEWS_HEADERS,
         )
@@ -97,12 +98,43 @@ def get_news_homepagina():
         logger.error(f"News homepagina fetch failed: {e}")
         raise HTTPException(status_code=502, detail="Kon nieuws niet ophalen")
 
+@api_router.get("/news/health")
+def news_health():
+    """Diagnostic: shows whether THIS backend can reach the upstream news API.
+    Open on production (e.g. https://dbnt.studio/api/news/health) to see the
+    real error (timeout / DNS / SSL / HTTP status)."""
+    url = f"{NEWS_BASE}/dbnt/homepagina"
+    start = time.perf_counter()
+    try:
+        r = requests.get(url, timeout=15, allow_redirects=True, headers=NEWS_HEADERS)
+        elapsed = round((time.perf_counter() - start) * 1000)
+        try:
+            items = len(r.json().get("items", []))
+        except Exception:
+            items = None
+        return {
+            "reachable": r.ok,
+            "upstream": url,
+            "status_code": r.status_code,
+            "elapsed_ms": elapsed,
+            "items": items,
+        }
+    except requests.RequestException as e:
+        elapsed = round((time.perf_counter() - start) * 1000)
+        return {
+            "reachable": False,
+            "upstream": url,
+            "elapsed_ms": elapsed,
+            "error_type": type(e).__name__,
+            "error": str(e),
+        }
+
 @api_router.get("/news/articles/{article_id}")
 def get_news_article(article_id: str):
     try:
         r = requests.get(
             f"{NEWS_BASE}/articles/{article_id}",
-            timeout=25,
+            timeout=15,
             allow_redirects=True,
             headers=NEWS_HEADERS,
         )

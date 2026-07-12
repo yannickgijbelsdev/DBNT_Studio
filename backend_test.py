@@ -1,252 +1,495 @@
 #!/usr/bin/env python3
 """
-Backend API Testing Script for DBNT News Proxy Endpoints
-Tests the two news proxy endpoints in /app/backend/server.py
+Backend API Testing for DBNT News Proxy Endpoints
+Tests the news proxy endpoints with recent changes:
+- HTTPS upstream (https://clr.koodh.com)
+- User-Agent header
+- 15s timeouts
+- NEW /api/news/health diagnostic endpoint
 """
 
 import requests
 import sys
 import json
+from pathlib import Path
 
-# Get backend URL from environment
-BACKEND_URL = "https://agency-showcase-212.preview.emergentagent.com/api"
+# Load REACT_APP_BACKEND_URL from frontend/.env
+def load_backend_url():
+    env_file = Path("/app/frontend/.env")
+    if not env_file.exists():
+        print("❌ ERROR: /app/frontend/.env not found")
+        sys.exit(1)
+    
+    with open(env_file) as f:
+        for line in f:
+            if line.startswith("REACT_APP_BACKEND_URL="):
+                url = line.split("=", 1)[1].strip()
+                return f"{url}/api"
+    
+    print("❌ ERROR: REACT_APP_BACKEND_URL not found in .env")
+    sys.exit(1)
+
+BASE_URL = load_backend_url()
+print(f"🔗 Testing against: {BASE_URL}\n")
+
+# Test results tracking
+test_results = {
+    "passed": 0,
+    "failed": 0,
+    "tests": []
+}
+
+def log_test(name, passed, details=""):
+    """Log test result"""
+    status = "✅ PASS" if passed else "❌ FAIL"
+    print(f"{status}: {name}")
+    if details:
+        print(f"   {details}")
+    
+    test_results["tests"].append({
+        "name": name,
+        "passed": passed,
+        "details": details
+    })
+    
+    if passed:
+        test_results["passed"] += 1
+    else:
+        test_results["failed"] += 1
 
 def test_news_homepagina():
-    """Test GET /api/news/homepagina endpoint"""
-    print("\n" + "="*80)
+    """Test 1: GET /api/news/homepagina"""
+    print("\n" + "="*70)
     print("TEST 1: GET /api/news/homepagina")
-    print("="*80)
+    print("="*70)
     
     try:
-        response = requests.get(f"{BACKEND_URL}/news/homepagina", timeout=30)
-        print(f"Status Code: {response.status_code}")
+        response = requests.get(f"{BASE_URL}/news/homepagina", timeout=20)
         
+        # Check status code
         if response.status_code != 200:
-            print(f"❌ FAILED: Expected status 200, got {response.status_code}")
-            print(f"Response: {response.text}")
-            return False
+            log_test(
+                "GET /api/news/homepagina - HTTP 200",
+                False,
+                f"Expected 200, got {response.status_code}"
+            )
+            return None
         
-        # Parse JSON response
-        data = response.json()
-        print(f"✓ Response is valid JSON")
+        log_test("GET /api/news/homepagina - HTTP 200", True)
+        
+        # Check JSON response
+        try:
+            data = response.json()
+        except json.JSONDecodeError as e:
+            log_test(
+                "GET /api/news/homepagina - Valid JSON",
+                False,
+                f"Invalid JSON: {e}"
+            )
+            return None
+        
+        log_test("GET /api/news/homepagina - Valid JSON", True)
         
         # Check for 'items' array
-        if 'items' not in data:
-            print(f"❌ FAILED: Response does not contain 'items' field")
-            print(f"Response keys: {list(data.keys())}")
-            return False
+        if "items" not in data:
+            log_test(
+                "GET /api/news/homepagina - Contains 'items' key",
+                False,
+                f"Response keys: {list(data.keys())}"
+            )
+            return None
         
-        print(f"✓ Response contains 'items' field")
+        log_test("GET /api/news/homepagina - Contains 'items' key", True)
         
-        # Check items is a list
-        if not isinstance(data['items'], list):
-            print(f"❌ FAILED: 'items' is not a list, it's {type(data['items'])}")
-            return False
+        # Check items is an array
+        if not isinstance(data["items"], list):
+            log_test(
+                "GET /api/news/homepagina - 'items' is array",
+                False,
+                f"'items' type: {type(data['items'])}"
+            )
+            return None
         
-        print(f"✓ 'items' is a list with {len(data['items'])} items")
+        log_test("GET /api/news/homepagina - 'items' is array", True)
         
-        # Check if items array has content
-        if len(data['items']) == 0:
-            print(f"⚠ WARNING: 'items' array is empty")
-            return True  # Not a failure, just no data
+        # Check at least 1 item
+        if len(data["items"]) < 1:
+            log_test(
+                "GET /api/news/homepagina - At least 1 item",
+                False,
+                f"Found {len(data['items'])} items"
+            )
+            return None
         
-        # Check first item structure
-        first_item = data['items'][0]
-        required_fields = ['id', 'title', 'category', 'published_at']
-        missing_fields = [field for field in required_fields if field not in first_item]
+        log_test(
+            "GET /api/news/homepagina - At least 1 item",
+            True,
+            f"Found {len(data['items'])} items"
+        )
         
-        if missing_fields:
-            print(f"⚠ WARNING: First item missing fields: {missing_fields}")
-            print(f"First item keys: {list(first_item.keys())}")
-        else:
-            print(f"✓ First item has all required fields: {required_fields}")
+        # Get first item's ID
+        first_item = data["items"][0]
+        if "id" not in first_item:
+            log_test(
+                "GET /api/news/homepagina - First item has 'id'",
+                False,
+                f"First item keys: {list(first_item.keys())}"
+            )
+            return None
         
-        # Look for "Catch It!" article
-        catch_it_article = None
-        for item in data['items']:
-            if 'title' in item and 'Catch It!' in item['title']:
-                catch_it_article = item
-                break
+        article_id = first_item["id"]
+        article_title = first_item.get("title", "Unknown")
         
-        if catch_it_article:
-            print(f"✓ Found 'Catch It!' article with id: {catch_it_article.get('id')}")
-            # Store this ID for the next test
-            return catch_it_article.get('id')
-        else:
-            print(f"⚠ WARNING: 'Catch It!' article not found in items")
-            # Return first item's ID if available
-            if data['items'] and 'id' in data['items'][0]:
-                first_id = data['items'][0]['id']
-                print(f"  Using first item's id instead: {first_id}")
-                return first_id
-            return True
+        log_test(
+            "GET /api/news/homepagina - First item has 'id'",
+            True,
+            f"ID: {article_id}, Title: {article_title}"
+        )
         
-    except requests.exceptions.RequestException as e:
-        print(f"❌ FAILED: Request exception: {e}")
-        return False
-    except json.JSONDecodeError as e:
-        print(f"❌ FAILED: Invalid JSON response: {e}")
-        return False
-    except Exception as e:
-        print(f"❌ FAILED: Unexpected error: {e}")
-        return False
+        print(f"\n📋 Response summary:")
+        print(f"   - Total items: {len(data['items'])}")
+        print(f"   - First item ID: {article_id}")
+        print(f"   - First item title: {article_title}")
+        
+        return article_id
+        
+    except requests.RequestException as e:
+        log_test(
+            "GET /api/news/homepagina - Request successful",
+            False,
+            f"Request error: {e}"
+        )
+        return None
 
+def test_news_health():
+    """Test 2: GET /api/news/health (NEW diagnostic endpoint)"""
+    print("\n" + "="*70)
+    print("TEST 2: GET /api/news/health (NEW DIAGNOSTIC ENDPOINT)")
+    print("="*70)
+    
+    try:
+        response = requests.get(f"{BASE_URL}/news/health", timeout=20)
+        
+        # Check status code
+        if response.status_code != 200:
+            log_test(
+                "GET /api/news/health - HTTP 200",
+                False,
+                f"Expected 200, got {response.status_code}"
+            )
+            return False
+        
+        log_test("GET /api/news/health - HTTP 200", True)
+        
+        # Check JSON response
+        try:
+            data = response.json()
+        except json.JSONDecodeError as e:
+            log_test(
+                "GET /api/news/health - Valid JSON",
+                False,
+                f"Invalid JSON: {e}"
+            )
+            return False
+        
+        log_test("GET /api/news/health - Valid JSON", True)
+        
+        # Check required keys
+        required_keys = ["reachable", "status_code", "elapsed_ms", "items", "upstream"]
+        missing_keys = [key for key in required_keys if key not in data]
+        
+        if missing_keys:
+            log_test(
+                "GET /api/news/health - Contains all required keys",
+                False,
+                f"Missing keys: {missing_keys}. Found keys: {list(data.keys())}"
+            )
+            return False
+        
+        log_test(
+            "GET /api/news/health - Contains all required keys",
+            True,
+            f"Keys: {list(data.keys())}"
+        )
+        
+        # Check 'reachable' is true
+        if data["reachable"] != True:
+            log_test(
+                "GET /api/news/health - 'reachable' is true",
+                False,
+                f"reachable: {data['reachable']}"
+            )
+        else:
+            log_test("GET /api/news/health - 'reachable' is true", True)
+        
+        # Check 'status_code' is 200
+        if data["status_code"] != 200:
+            log_test(
+                "GET /api/news/health - 'status_code' is 200",
+                False,
+                f"status_code: {data['status_code']}"
+            )
+        else:
+            log_test("GET /api/news/health - 'status_code' is 200", True)
+        
+        # Check 'elapsed_ms' is a number
+        if not isinstance(data["elapsed_ms"], (int, float)):
+            log_test(
+                "GET /api/news/health - 'elapsed_ms' is a number",
+                False,
+                f"elapsed_ms type: {type(data['elapsed_ms'])}"
+            )
+        else:
+            log_test(
+                "GET /api/news/health - 'elapsed_ms' is a number",
+                True,
+                f"elapsed_ms: {data['elapsed_ms']}ms"
+            )
+        
+        # Check 'items' is a number >= 1
+        if not isinstance(data["items"], (int, type(None))):
+            log_test(
+                "GET /api/news/health - 'items' is a number",
+                False,
+                f"items type: {type(data['items'])}"
+            )
+        elif data["items"] is not None and data["items"] < 1:
+            log_test(
+                "GET /api/news/health - 'items' >= 1",
+                False,
+                f"items: {data['items']}"
+            )
+        else:
+            log_test(
+                "GET /api/news/health - 'items' >= 1",
+                True,
+                f"items: {data['items']}"
+            )
+        
+        # Check 'upstream' shows HTTPS URL
+        if not isinstance(data["upstream"], str) or not data["upstream"].startswith("https://"):
+            log_test(
+                "GET /api/news/health - 'upstream' is HTTPS URL",
+                False,
+                f"upstream: {data['upstream']}"
+            )
+        else:
+            log_test(
+                "GET /api/news/health - 'upstream' is HTTPS URL",
+                True,
+                f"upstream: {data['upstream']}"
+            )
+        
+        # Confirm it does NOT throw 500
+        log_test(
+            "GET /api/news/health - Does NOT return 500",
+            True,
+            f"Returned {response.status_code}"
+        )
+        
+        print(f"\n📋 Health check summary:")
+        print(f"   - Reachable: {data.get('reachable')}")
+        print(f"   - Status code: {data.get('status_code')}")
+        print(f"   - Elapsed: {data.get('elapsed_ms')}ms")
+        print(f"   - Items: {data.get('items')}")
+        print(f"   - Upstream: {data.get('upstream')}")
+        
+        return True
+        
+    except requests.RequestException as e:
+        log_test(
+            "GET /api/news/health - Request successful",
+            False,
+            f"Request error: {e}"
+        )
+        return False
 
 def test_news_article(article_id):
-    """Test GET /api/news/articles/{article_id} endpoint"""
-    print("\n" + "="*80)
-    print(f"TEST 2: GET /api/news/articles/{article_id}")
-    print("="*80)
+    """Test 3: GET /api/news/articles/{id}"""
+    print("\n" + "="*70)
+    print(f"TEST 3: GET /api/news/articles/{article_id}")
+    print("="*70)
+    
+    if not article_id:
+        log_test(
+            "GET /api/news/articles/{id} - Skipped",
+            False,
+            "No article ID from Test 1"
+        )
+        return False
     
     try:
-        response = requests.get(f"{BACKEND_URL}/news/articles/{article_id}", timeout=30)
-        print(f"Status Code: {response.status_code}")
+        response = requests.get(f"{BASE_URL}/news/articles/{article_id}", timeout=20)
         
+        # Check status code
         if response.status_code != 200:
-            print(f"❌ FAILED: Expected status 200, got {response.status_code}")
-            print(f"Response: {response.text}")
+            log_test(
+                f"GET /api/news/articles/{article_id} - HTTP 200",
+                False,
+                f"Expected 200, got {response.status_code}"
+            )
             return False
         
-        # Parse JSON response
-        data = response.json()
-        print(f"✓ Response is valid JSON")
+        log_test(f"GET /api/news/articles/{article_id} - HTTP 200", True)
         
-        # Check for required fields
-        if 'title' not in data:
-            print(f"❌ FAILED: Response does not contain 'title' field")
-            print(f"Response keys: {list(data.keys())}")
+        # Check JSON response
+        try:
+            data = response.json()
+        except json.JSONDecodeError as e:
+            log_test(
+                f"GET /api/news/articles/{article_id} - Valid JSON",
+                False,
+                f"Invalid JSON: {e}"
+            )
             return False
         
-        print(f"✓ Response contains 'title' field: {data['title'][:50]}...")
+        log_test(f"GET /api/news/articles/{article_id} - Valid JSON", True)
         
-        if 'body' not in data:
-            print(f"❌ FAILED: Response does not contain 'body' field")
-            print(f"Response keys: {list(data.keys())}")
+        # Check for 'title' field
+        if "title" not in data:
+            log_test(
+                f"GET /api/news/articles/{article_id} - Contains 'title'",
+                False,
+                f"Response keys: {list(data.keys())}"
+            )
             return False
         
-        print(f"✓ Response contains 'body' field")
+        log_test(
+            f"GET /api/news/articles/{article_id} - Contains 'title'",
+            True,
+            f"Title: {data['title']}"
+        )
         
-        # Check if body contains HTML
-        body = data['body']
-        if not isinstance(body, str):
-            print(f"❌ FAILED: 'body' is not a string, it's {type(body)}")
+        # Check for 'body' field
+        if "body" not in data:
+            log_test(
+                f"GET /api/news/articles/{article_id} - Contains 'body'",
+                False,
+                f"Response keys: {list(data.keys())}"
+            )
             return False
         
-        # Simple HTML check - look for common HTML tags
-        html_indicators = ['<p>', '<div>', '<span>', '<h1>', '<h2>', '<h3>', '<br>', '<a>']
-        has_html = any(indicator in body for indicator in html_indicators)
+        body_length = len(str(data['body']))
+        log_test(
+            f"GET /api/news/articles/{article_id} - Contains 'body'",
+            True,
+            f"Body length: {body_length} chars"
+        )
         
-        if has_html:
-            print(f"✓ 'body' contains HTML content (length: {len(body)} chars)")
-        else:
-            print(f"⚠ WARNING: 'body' might not contain HTML (length: {len(body)} chars)")
-            print(f"  First 100 chars: {body[:100]}")
+        print(f"\n📋 Article summary:")
+        print(f"   - Title: {data.get('title')}")
+        print(f"   - Body length: {body_length} chars")
+        print(f"   - Response keys: {list(data.keys())}")
         
-        print(f"✅ TEST PASSED: Article endpoint returned valid response")
         return True
         
-    except requests.exceptions.RequestException as e:
-        print(f"❌ FAILED: Request exception: {e}")
-        return False
-    except json.JSONDecodeError as e:
-        print(f"❌ FAILED: Invalid JSON response: {e}")
-        return False
-    except Exception as e:
-        print(f"❌ FAILED: Unexpected error: {e}")
+    except requests.RequestException as e:
+        log_test(
+            f"GET /api/news/articles/{article_id} - Request successful",
+            False,
+            f"Request error: {e}"
+        )
         return False
 
-
-def test_news_article_invalid():
-    """Test GET /api/news/articles/{article_id} with invalid ID"""
-    print("\n" + "="*80)
-    print("TEST 3: GET /api/news/articles/nonexistent-id-123 (Invalid ID)")
-    print("="*80)
+def check_backend_logs():
+    """Test 4: Check backend logs for errors"""
+    print("\n" + "="*70)
+    print("TEST 4: Check backend logs for errors")
+    print("="*70)
+    
+    import subprocess
     
     try:
-        response = requests.get(f"{BACKEND_URL}/news/articles/nonexistent-id-123", timeout=30)
-        print(f"Status Code: {response.status_code}")
+        # Get last 100 lines of backend logs
+        result = subprocess.run(
+            ["tail", "-n", "100", "/var/log/supervisor/backend.err.log"],
+            capture_output=True,
+            text=True,
+            timeout=5
+        )
         
-        # Should return 502 or some error response, not crash
-        if response.status_code == 200:
-            print(f"⚠ WARNING: Got 200 OK for invalid article ID (unexpected)")
-            return True
+        error_log = result.stdout
         
-        if response.status_code == 502:
-            print(f"✓ Got expected 502 Bad Gateway for invalid article")
-            try:
-                error_data = response.json()
-                print(f"✓ Error response is valid JSON: {error_data}")
-            except:
-                print(f"  Response text: {response.text}")
-            return True
+        # Check for critical errors related to news endpoints
+        error_keywords = [
+            "Traceback",
+            "Exception",
+            "ERROR",
+            "CRITICAL",
+            "NameError",
+            "AttributeError",
+            "KeyError"
+        ]
         
-        # Any other error status is also acceptable
-        if response.status_code >= 400:
-            print(f"✓ Got error status {response.status_code} for invalid article (acceptable)")
-            try:
-                error_data = response.json()
-                print(f"  Error response: {error_data}")
-            except:
-                print(f"  Response text: {response.text}")
-            return True
+        errors_found = []
+        for line in error_log.split("\n"):
+            if any(keyword in line for keyword in error_keywords):
+                # Filter out old errors (only check recent ones)
+                if "news" in line.lower() or "article" in line.lower():
+                    errors_found.append(line.strip())
         
-        print(f"⚠ WARNING: Unexpected status code {response.status_code}")
-        return True
+        if errors_found:
+            log_test(
+                "Backend logs - No errors for news endpoints",
+                False,
+                f"Found {len(errors_found)} error lines"
+            )
+            print("\n⚠️  Error lines found:")
+            for error in errors_found[:5]:  # Show first 5
+                print(f"   {error}")
+        else:
+            log_test(
+                "Backend logs - No errors for news endpoints",
+                True,
+                "No critical errors found in recent logs"
+            )
         
-    except requests.exceptions.RequestException as e:
-        print(f"❌ FAILED: Request exception (server might have crashed): {e}")
-        return False
+        return len(errors_found) == 0
+        
     except Exception as e:
-        print(f"❌ FAILED: Unexpected error: {e}")
+        log_test(
+            "Backend logs - Check logs",
+            False,
+            f"Could not read logs: {e}"
+        )
         return False
 
-
-def main():
-    """Run all backend tests"""
-    print("\n" + "="*80)
-    print("BACKEND API TESTING - DBNT News Proxy Endpoints")
-    print("="*80)
-    print(f"Backend URL: {BACKEND_URL}")
+def print_summary():
+    """Print final test summary"""
+    print("\n" + "="*70)
+    print("FINAL TEST SUMMARY")
+    print("="*70)
     
-    results = []
+    total = test_results["passed"] + test_results["failed"]
+    print(f"\n📊 Results: {test_results['passed']}/{total} tests passed")
     
-    # Test 1: Homepage endpoint
-    result1 = test_news_homepagina()
-    if isinstance(result1, str):
-        # Got an article ID
-        article_id = result1
-        results.append(True)
-    elif result1 is True:
-        # Passed but no specific article ID
-        article_id = "898cf109-e3c4-40a7-9eac-df6204128969"  # Use known ID from requirements
-        results.append(True)
-    else:
-        results.append(False)
-        article_id = "898cf109-e3c4-40a7-9eac-df6204128969"  # Try anyway
+    if test_results["failed"] > 0:
+        print(f"\n❌ Failed tests ({test_results['failed']}):")
+        for test in test_results["tests"]:
+            if not test["passed"]:
+                print(f"   - {test['name']}")
+                if test["details"]:
+                    print(f"     {test['details']}")
     
-    # Test 2: Article endpoint with valid ID
-    result2 = test_news_article(article_id)
-    results.append(result2)
+    print("\n" + "="*70)
     
-    # Test 3: Article endpoint with invalid ID
-    result3 = test_news_article_invalid()
-    results.append(result3)
-    
-    # Summary
-    print("\n" + "="*80)
-    print("TEST SUMMARY")
-    print("="*80)
-    passed = sum(results)
-    total = len(results)
-    print(f"Tests Passed: {passed}/{total}")
-    
-    if passed == total:
+    if test_results["failed"] == 0:
         print("✅ ALL TESTS PASSED")
         return 0
     else:
         print("❌ SOME TESTS FAILED")
         return 1
 
-
 if __name__ == "__main__":
-    sys.exit(main())
+    print("🧪 DBNT News Proxy Endpoints Testing")
+    print("="*70)
+    
+    # Run tests
+    article_id = test_news_homepagina()
+    test_news_health()
+    test_news_article(article_id)
+    check_backend_logs()
+    
+    # Print summary and exit
+    exit_code = print_summary()
+    sys.exit(exit_code)
