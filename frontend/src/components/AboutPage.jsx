@@ -20,7 +20,19 @@ const AboutPage = () => {
     setError(false);
     try {
       const res = await axios.get(`${API}/news/over-mij`);
-      setItems(res.data?.items || []);
+      const list = res.data?.items || [];
+      // The list endpoint has no body; fetch full article per item to get the body.
+      const detailed = await Promise.all(
+        list.map(async (it) => {
+          try {
+            const d = await axios.get(`${API}/news/articles/${it.id}`);
+            return { ...it, ...d.data };
+          } catch {
+            return it;
+          }
+        })
+      );
+      setItems(detailed);
     } catch (e) {
       setError(true);
     } finally {
@@ -91,21 +103,23 @@ const AboutPage = () => {
           <div className="mt-10 space-y-16 pb-24">
             {items.map((item) => (
               <article key={item.id}>
-                <h2 className="text-2xl font-bold tracking-tight text-white">
-                  {item.title}
-                </h2>
                 {item.image_url && (
-                  <div className="mt-6 aspect-[16/9] w-full overflow-hidden rounded-3xl bg-white/10">
+                  <div className="aspect-[16/9] w-full overflow-hidden rounded-3xl bg-white/10">
                     <img
                       src={item.image_url}
-                      alt={item.title}
+                      alt="Over mij"
                       className="h-full w-full object-cover"
                     />
                   </div>
                 )}
                 <div
-                  className="article-body mt-6"
-                  dangerouslySetInnerHTML={{ __html: item.body || "" }}
+                  className="article-body mt-8"
+                  dangerouslySetInnerHTML={{
+                    __html: (item.body || "").replace(
+                      /<p class="clara-image-credit">[\s\S]*?<\/p>/g,
+                      ""
+                    ),
+                  }}
                 />
               </article>
             ))}
