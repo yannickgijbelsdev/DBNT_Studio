@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { ArrowLeft, Loader2, RotateCw, Mail } from "lucide-react";
+import { ArrowLeft, Loader2, RotateCw } from "lucide-react";
 import Header from "./Header";
 import Footer from "./Footer";
 import { setArticleSEO, resetSEO } from "../lib/seo";
@@ -113,24 +113,10 @@ const AboutPage = () => {
         )}
 
         {!loading && !error && items.length === 0 && (
-          <div className="mt-10 pb-24">
-            <p className="text-lg leading-relaxed text-white/70">
-              Hoi, ik ben <span className="text-white">Deborah</span> — grafisch
-              designer bij DBNT in Peer, Limburg. Ik help merken groeien met
-              doordacht grafisch design, logo's en branding die verder gaan dan
-              het voor de hand liggende.
+          <div className="py-20 pb-24 text-center">
+            <p className="text-lg text-white/50">
+              Er is nog geen inhoud beschikbaar voor deze pagina.
             </p>
-            <p className="mt-4 text-lg leading-relaxed text-white/70">
-              De volledige inhoud van deze pagina volgt binnenkort. Wil je nu al
-              samenwerken of meer weten?
-            </p>
-            <a
-              href="mailto:deborah@dbnt.studio"
-              className="mt-8 inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-medium text-neutral-900 transition-colors hover:bg-neutral-200"
-            >
-              <Mail size={17} />
-              deborah@dbnt.studio
-            </a>
           </div>
         )}
       </main>

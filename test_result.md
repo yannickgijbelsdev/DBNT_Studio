@@ -153,6 +153,18 @@ backend:
         agent: "testing"
         comment: "✅ NEW ENDPOINT VERIFIED (2026-01-20): Diagnostic endpoint /api/news/health returns HTTP 200 with all required keys: 'reachable' (true), 'status_code' (200), 'elapsed_ms' (371ms), 'items' (4), 'upstream' (https://clr.koodh.com/api/news/dbnt/homepagina). Does NOT throw 500. Endpoint successfully diagnoses upstream connectivity and provides detailed health metrics."
 
+  - task: "GET /api/news/over-mij endpoint"
+    implemented: true
+    working: true
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "✅ VERIFIED (2026-07-13): Endpoint returns HTTP 200 with valid JSON structure. Response contains empty 'items' array (items:[], count:0) as expected. Proxies correctly to upstream https://clr.koodh.com/api/news/dbnt/over-mij with 15s timeout and User-Agent header. No errors in backend logs."
+
 frontend:
   - task: "Homepage news/case-studies cards load in 'Mijn creatieve brein' section"
     implemented: true
@@ -274,10 +286,22 @@ frontend:
         agent: "testing"
         comment: "✅ VERIFIED: Article card navigation works correctly. Clicking 'Catch It!' card navigates to /artikel/898cf109-e3c4-40a7-9eac-df6204128969. Article page loads with title, image, content, and 'Terug' (back) button. Navigation flow is smooth and functional."
 
+  - task: "'Over mij' (About) page - empty state handling (NO fabricated content)"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/components/AboutPage.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "✅ BUG FIX VERIFIED (2026-07-13): When API returns empty items array, page correctly displays empty state message 'Er is nog geen inhoud beschikbaar voor deze pagina.' The fabricated biography paragraph ('Hoi, ik ben Deborah — grafisch designer bij DBNT in Peer') is NOT present in page body. Page structure correct: h1 'Over mij', 'Terug' button, no article content. Email in footer (deborah@dbnt.studio) is legitimate site-wide contact info, not the bug. Zero console errors. Bug fix successful."
+
 metadata:
   created_by: "testing_agent"
-  version: "1.2"
-  test_sequence: 4
+  version: "1.3"
+  test_sequence: 5
   run_ui: true
 
 test_plan:
@@ -297,3 +321,5 @@ agent_communication:
     message: "✅ NEWS/CASE-STUDIES LOADING VERIFICATION COMPLETE (2026-07-11): All 4 verification items PASSED. (1) Homepage section 'Mijn creatieve brein' displays 3 case-study cards (Norah, middle card, catch it!) with images and white title overlays - NO error message shown. (2) API /api/news/homepagina returns HTTP 200 with 'items' array containing 3 items. (3) Clicking 'Norah' card navigates to /artikel/{id} and loads article page with h1 title, body content, and 'Terug' button. API /api/news/articles/{id} returns HTTP 200. (4) Zero console errors related to news fetch. The reported bug is RESOLVED - case-studies load correctly without showing 'Kon de casestudy's niet laden.' error."
   - agent: "testing"
     message: "✅ DBNT NEWS PROXY BACKEND CHANGES VERIFIED (2026-01-20): All 4 test items PASSED (20/20 individual checks). (1) GET /api/news/homepagina returns HTTP 200 with 'items' array (4 items), captured ID: 0d88f1a2-9e7c-4335-9a20-1fe9797a3126. (2) GET /api/news/health (NEW diagnostic endpoint) returns HTTP 200 with all required keys: reachable=true, status_code=200, elapsed_ms=371, items=4, upstream=https://clr.koodh.com/api/news/dbnt/homepagina. Does NOT throw 500. (3) GET /api/news/articles/{id} returns HTTP 200 with 'title' and 'body' fields. (4) No regressions or server errors in backend logs. Backend changes confirmed: HTTPS upstream (https://clr.koodh.com), User-Agent header present, 15s timeouts, NEW health endpoint working. Previous logger bug is FIXED."
+  - agent: "testing"
+    message: "✅ 'OVER MIJ' PAGE BUG FIX VERIFIED (2026-07-13): All 4 verification items PASSED. (1) EMPTY STATE, NO FAKE CONTENT: The fabricated biography paragraph ('Hoi, ik ben Deborah — grafisch designer bij DBNT in Peer') is NOT present in the page body. Page correctly shows only 'Over mij' heading and empty state message 'Er is nog geen inhoud beschikbaar voor deze pagina.' (Email in footer is legitimate site-wide contact info, not the bug). (2) API CALL: GET /api/news/over-mij returns HTTP 200 with empty items array (items:[], count:0). (3) STRUCTURE: Page displays h1 'Over mij', 'Terug' back button, and NO article content (correct for empty state). (4) NO CONSOLE ERRORS: Zero console errors related to this page. Bug fix is SUCCESSFUL - fabricated content removed, empty state correctly displayed."
