@@ -129,6 +129,21 @@ def news_health():
             "error": str(e),
         }
 
+@api_router.get("/news/over-mij")
+def get_news_over_mij():
+    try:
+        r = requests.get(
+            f"{NEWS_BASE}/dbnt/over-mij",
+            timeout=15,
+            allow_redirects=True,
+            headers=NEWS_HEADERS,
+        )
+        r.raise_for_status()
+        return r.json()
+    except requests.RequestException as e:
+        logger.error(f"News over-mij fetch failed: {e}")
+        raise HTTPException(status_code=502, detail="Kon 'over mij' niet ophalen")
+
 @api_router.get("/news/articles/{article_id}")
 def get_news_article(article_id: str):
     try:
