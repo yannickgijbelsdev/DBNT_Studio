@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { slugify } from "../lib/slug";
 
 const ArticleCard = ({ article, index }) => {
   const [visible, setVisible] = useState(false);
@@ -26,7 +27,9 @@ const ArticleCard = ({ article, index }) => {
   return (
     <button
       ref={ref}
-      onClick={() => navigate(`/artikel/${article.id}`)}
+      onClick={() =>
+        navigate(`/project/${article.slug || slugify(article.title)}`)
+      }
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
       className="group block w-full text-left"

@@ -5,6 +5,7 @@ import { ArrowLeft, Loader2, RotateCw } from "lucide-react";
 import Header from "./Header";
 import Footer from "./Footer";
 import { setArticleSEO, resetSEO, stripHtml } from "../lib/seo";
+import { slugify } from "../lib/slug";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || "";
 const API = `${BACKEND_URL}/api`;
@@ -30,7 +31,7 @@ const sanitizeBody = (html) => {
 };
 
 const ArticlePage = () => {
-  const { id } = useParams();
+  const { id, slug } = useParams();
   const navigate = useNavigate();
   const [article, setArticle] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -40,7 +41,20 @@ const ArticlePage = () => {
     setLoading(true);
     setError(false);
     try {
-      const res = await axios.get(`${API}/news/articles/${id}`);
+      let articleId = id;
+      // Resolve a project slug (e.g. /project/renovatiewerken-devos) to an id.
+      if (!articleId && slug) {
+        const list = (await axios.get(`${API}/news/homepagina`)).data?.items || [];
+        const match =
+          list.find((it) => it.slug === slug) ||
+          list.find((it) => slugify(it.title) === slug);
+        articleId = match?.id;
+      }
+      if (!articleId) {
+        setError(true);
+        return;
+      }
+      const res = await axios.get(`${API}/news/articles/${articleId}`);
       setArticle(res.data);
     } catch (e) {
       setError(true);
@@ -53,7 +67,7 @@ const ArticlePage = () => {
     window.scrollTo(0, 0);
     fetchArticle();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
+  }, [id, slug]);
 
   // Per-article SEO (title, description, keywords, OG/Twitter, JSON-LD)
   useEffect(() => {
