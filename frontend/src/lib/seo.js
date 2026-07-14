@@ -51,7 +51,7 @@ export const stripHtml = (html, max = 160) => {
 };
 
 export const setArticleSEO = ({ title, description, keywords = [], image, url }) => {
-  const fullTitle = title ? `${title} | DBNT — Design Beyond Thinking` : "DBNT";
+  const fullTitle = title ? `${title} | DBNT — Design Beyond Normal Thinking` : "DBNT";
   const allKeywords = Array.from(new Set([...(keywords || []), ...BASE_KEYWORDS]));
   const desc =
     description ||
@@ -65,7 +65,7 @@ export const setArticleSEO = ({ title, description, keywords = [], image, url })
 
   // Open Graph
   setPropMeta("og:type", "article");
-  setPropMeta("og:site_name", "DBNT — Design Beyond Thinking");
+  setPropMeta("og:site_name", "DBNT — Design Beyond Normal Thinking");
   setPropMeta("og:title", fullTitle);
   setPropMeta("og:description", desc);
   setPropMeta("og:locale", "nl_BE");
@@ -91,7 +91,7 @@ export const setArticleSEO = ({ title, description, keywords = [], image, url })
     author: { "@type": "Person", name: "Deborah Baeten" },
     publisher: {
       "@type": "Organization",
-      name: "DBNT — Design Beyond Thinking",
+      name: "DBNT — Design Beyond Normal Thinking",
       areaServed: "Peer, Limburg, België",
     },
     mainEntityOfPage: url || undefined,
@@ -108,7 +108,7 @@ export const setArticleSEO = ({ title, description, keywords = [], image, url })
 };
 
 export const resetSEO = () => {
-  document.title = "DBNT — Design Beyond Thinking";
+  document.title = "DBNT — Design Beyond Normal Thinking";
   setNamedMeta(
     "description",
     "Grafisch design, logo's ontwerpen en branding door DBNT in Peer, Limburg, België."

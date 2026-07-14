@@ -54,7 +54,7 @@ const WorkPage = () => {
                 className="brand-tagline block text-xl leading-none text-white sm:text-2xl lg:text-4xl"
                 style={{ textShadow: "0 2px 16px rgba(0,0,0,0.55)" }}
               >
-                Design Beyond Thinking
+                Design Beyond Normal Thinking
               </span>
 
               <div className="flex flex-wrap items-center gap-2.5">
@@ -66,8 +66,9 @@ const WorkPage = () => {
                   Over mij
                 </Link>
                 <a
-                  href="/cv-deborah-baeten.pdf"
-                  download
+                  href="https://customer-assets.emergentagent.com/job_agency-showcase-212/artifacts/ggq363h5_CV-A4-Sollicitatie.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="group inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-medium text-neutral-900 shadow-lg transition-colors hover:bg-neutral-200"
                 >
                   <Download

@@ -4,7 +4,8 @@ import { Download, Mail } from "lucide-react";
 import { openCookieSettings } from "../lib/consent";
 
 // NOTE: upload the actual CV to /app/frontend/public/ with this filename to make the download work.
-const CV_URL = "/cv-deborah-baeten.pdf";
+const CV_URL =
+  "https://customer-assets.emergentagent.com/job_agency-showcase-212/artifacts/ggq363h5_CV-A4-Sollicitatie.pdf";
 
 const Footer = () => {
   return (
@@ -12,7 +13,7 @@ const Footer = () => {
       <div className="relative mx-auto max-w-[1600px] px-6 py-16 lg:px-10 lg:py-24">
         <div className="flex flex-col items-center gap-8 text-center">
           <span className="brand-tagline text-3xl text-white sm:text-4xl lg:text-5xl">
-            Design Beyond Thinking
+            Design Beyond Normal Thinking
           </span>
 
           <a
@@ -25,7 +26,8 @@ const Footer = () => {
 
           <a
             href={CV_URL}
-            download
+            target="_blank"
+            rel="noopener noreferrer"
             className="group inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-medium text-neutral-900 transition-colors hover:bg-neutral-200"
           >
             <Download
