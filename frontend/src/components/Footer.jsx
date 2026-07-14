@@ -4,8 +4,7 @@ import { Download, Mail } from "lucide-react";
 import { openCookieSettings } from "../lib/consent";
 
 // NOTE: upload the actual CV to /app/frontend/public/ with this filename to make the download work.
-const CV_URL =
-  "https://customer-assets.emergentagent.com/job_agency-showcase-212/artifacts/ggq363h5_CV-A4-Sollicitatie.pdf";
+const CV_URL = "/assets/CV-A4-Sollicitatie.pdf";
 
 const Footer = () => {
   return (

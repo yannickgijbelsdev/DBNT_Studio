@@ -66,7 +66,7 @@ const WorkPage = () => {
                   Over mij
                 </Link>
                 <a
-                  href="https://customer-assets.emergentagent.com/job_agency-showcase-212/artifacts/ggq363h5_CV-A4-Sollicitatie.pdf"
+                  href="/assets/CV-A4-Sollicitatie.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-medium text-neutral-900 shadow-lg transition-colors hover:bg-neutral-200"
