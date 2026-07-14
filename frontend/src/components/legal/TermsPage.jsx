@@ -5,135 +5,95 @@ import { resetSEO } from "../../lib/seo";
 const TermsPage = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = "Algemene Voorwaarden | DBNT";
+    document.title = "Algemene Voorwaarden | Deborah Baeten — DBNT";
     return () => resetSEO();
   }, []);
 
   return (
-    <LegalLayout title="Algemene Voorwaarden" updated="9 juli 2025">
+    <LegalLayout title="Algemene Voorwaarden" updated="14 juli 2025">
       <p>
-        Deze algemene voorwaarden zijn van toepassing op alle offertes,
-        opdrachten en overeenkomsten tussen DBNT — Deborah Baeten (hierna
-        “DBNT”, “wij” of “ons”), gevestigd te Peer, Limburg, België, en de klant
-        (hierna “je” of “de klant”).
+        Dit is de persoonlijke portfoliowebsite van Deborah Baeten (DBNT),
+        grafisch designer uit Peer, Limburg, België. Deze website toont mijn
+        creatieve werk en projecten. Het is géén webshop: er worden op deze site
+        geen producten of diensten rechtstreeks verkocht. Onderstaande
+        voorwaarden regelen het gebruik van deze website.
       </p>
 
-      <h2>Artikel 1 — Definities</h2>
-      <ul>
-        <li>
-          <strong>Opdrachtnemer:</strong> DBNT — Deborah Baeten, aanbieder van
-          grafisch-ontwerp-, logo- en brandingdiensten.
-        </li>
-        <li>
-          <strong>Opdrachtgever/klant:</strong> de natuurlijke of rechtspersoon
-          die een overeenkomst aangaat met DBNT.
-        </li>
-        <li>
-          <strong>Diensten:</strong> alle door DBNT geleverde creatieve en
-          designwerkzaamheden.
-        </li>
-      </ul>
-
-      <h2>Artikel 2 — Toepasselijkheid</h2>
+      <h2>1. Over deze website</h2>
       <p>
-        Deze voorwaarden zijn van toepassing zodra een offerte wordt aanvaard of
-        een opdracht wordt bevestigd. Afwijkingen zijn enkel geldig indien
-        schriftelijk overeengekomen.
+        Deze site dient als portfolio en visitekaartje. De getoonde projecten,
+        casestudy’s en teksten zijn bedoeld ter illustratie van mijn werk en
+        stijl. Aan de inhoud van deze website kunnen geen rechten of
+        verbintenissen worden ontleend.
       </p>
 
-      <h2>Artikel 3 — Offertes en aanbiedingen</h2>
+      <h2>2. Intellectuele eigendom</h2>
       <p>
-        Offertes zijn vrijblijvend en 30 dagen geldig, tenzij anders vermeld.
-        Prijzen zijn in euro en exclusief btw, tenzij uitdrukkelijk anders
-        aangegeven.
+        Alle op deze website getoonde ontwerpen, illustraties, teksten, foto’s en
+        andere creaties zijn beschermd door het auteursrecht en blijven eigendom
+        van Deborah Baeten of van de betrokken opdrachtgevers. Niets van deze
+        website mag worden gekopieerd, verveelvoudigd of hergebruikt zonder
+        voorafgaande schriftelijke toestemming.
+      </p>
+      <p>
+        Merknamen, logo’s en projecten van klanten worden uitsluitend getoond als
+        referentie en portfolio. Deze blijven eigendom van hun respectieve
+        eigenaars; hun vermelding impliceert geen samenwerking of goedkeuring
+        buiten het getoonde project.
       </p>
 
-      <h2>Artikel 4 — Prijzen en betaling</h2>
-      <ul>
-        <li>Facturen zijn betaalbaar binnen 14 dagen na factuurdatum.</li>
-        <li>
-          Bij grotere projecten kan een voorschot van 30% worden gevraagd vóór
-          aanvang.
-        </li>
-        <li>
-          Bij laattijdige betaling kan van rechtswege en zonder ingebrekestelling
-          een verwijlintrest en administratieve kost worden aangerekend conform
-          de geldende wetgeving.
-        </li>
-      </ul>
-
-      <h2>Artikel 5 — Uitvoering en levering</h2>
+      <h2>3. Gebruik van de website</h2>
       <p>
-        DBNT levert de diensten naar best vermogen en vakmanschap. Opgegeven
-        termijnen zijn indicatief en afhankelijk van tijdige aanlevering van
-        materialen en feedback door de klant.
+        Je mag deze website vrij bekijken voor persoonlijke, niet-commerciële
+        doeleinden. Het is niet toegestaan de website of delen ervan te gebruiken
+        op een manier die schade toebrengt of inbreuk maakt op rechten van
+        derden.
       </p>
 
-      <h2>Artikel 6 — Wijzigingen en meerwerk</h2>
+      <h2>4. Samenwerkingen &amp; opdrachten</h2>
       <p>
-        Een offerte omvat een afgesproken aantal ontwerp- en revisierondes.
-        Bijkomende wijzigingen of uitbreidingen van de opdracht worden als
-        meerwerk beschouwd en afzonderlijk aangerekend.
+        Interesse in een samenwerking? Dat kan altijd via{" "}
+        <a href="mailto:deborah@dbnt.studio">deborah@dbnt.studio</a>. Concrete
+        afspraken over een opdracht (scope, timing en vergoeding) worden steeds
+        afzonderlijk en per project overeengekomen. Deze website zelf vormt geen
+        aanbod en er ontstaat geen overeenkomst door het louter bezoeken ervan.
       </p>
 
-      <h2>Artikel 7 — Intellectuele eigendom</h2>
+      <h2>5. Aansprakelijkheid</h2>
       <p>
-        Alle intellectuele eigendomsrechten op ontwerpen en concepten blijven bij
-        DBNT tot volledige betaling. Na volledige betaling verkrijgt de klant een
-        gebruiksrecht op de opgeleverde eindbestanden voor het overeengekomen
-        doel. Bronbestanden en niet-gekozen concepten blijven eigendom van DBNT,
-        tenzij anders overeengekomen. DBNT mag het werk gebruiken voor eigen
-        portfolio en promotie.
+        De inhoud van deze website wordt met de grootste zorg samengesteld. Toch
+        kan ik niet garanderen dat alle informatie steeds volledig, juist of
+        actueel is. Ik ben niet aansprakelijk voor eventuele schade die
+        voortvloeit uit het gebruik van deze website of tijdelijke
+        onbeschikbaarheid ervan.
       </p>
 
-      <h2>Artikel 8 — Aansprakelijkheid</h2>
+      <h2>6. Externe links</h2>
       <p>
-        De aansprakelijkheid van DBNT is beperkt tot het factuurbedrag van de
-        betreffende opdracht. DBNT is niet aansprakelijk voor indirecte schade.
-        De klant is verantwoordelijk voor het controleren van drukproeven en
-        teksten vóór productie.
+        Deze website kan links naar externe websites bevatten. Ik heb geen
+        controle over de inhoud van die sites en ben niet verantwoordelijk voor
+        hun werking of inhoud.
       </p>
 
-      <h2>Artikel 9 — Herroepingsrecht (consumenten)</h2>
+      <h2>7. Privacy &amp; cookies</h2>
       <p>
-        Bij op maat gemaakte creatieve diensten vervalt het wettelijke
-        herroepingsrecht zodra de uitvoering met instemming van de consument is
-        gestart, conform het Belgische Wetboek van economisch recht.
+        Deze website gaat zorgvuldig om met je gegevens conform de GDPR. Meer
+        informatie vind je in het{" "}
+        <a href="/cookiebeleid">cookiebeleid</a>.
       </p>
 
-      <h2>Artikel 10 — Klachten</h2>
+      <h2>8. Toepasselijk recht</h2>
       <p>
-        Klachten dienen binnen 8 dagen na levering schriftelijk gemeld te worden
-        via deborah@dbnt.studio, met een duidelijke omschrijving.
-      </p>
-
-      <h2>Artikel 11 — Overmacht</h2>
-      <p>
-        Bij overmacht worden de verplichtingen opgeschort. Geen van beide
-        partijen is dan gehouden tot schadevergoeding.
-      </p>
-
-      <h2>Artikel 12 — Privacy</h2>
-      <p>
-        DBNT verwerkt persoonsgegevens conform de GDPR. Zie het{" "}
-        <a href="/cookiebeleid">cookiebeleid</a> voor meer informatie over cookies
-        en gegevens.
-      </p>
-
-      <h2>Artikel 13 — Toepasselijk recht en geschillen</h2>
-      <p>
-        Op alle overeenkomsten is het Belgisch recht van toepassing. Geschillen
-        worden voorgelegd aan de bevoegde rechtbanken van het gerechtelijk
-        arrondissement Limburg.
+        Op het gebruik van deze website is het Belgisch recht van toepassing.
+        Eventuele geschillen behoren tot de bevoegdheid van de rechtbanken van het
+        gerechtelijk arrondissement Limburg.
       </p>
 
       <h2>Contact</h2>
       <p>
-        DBNT — Deborah Baeten, Peer, Limburg, België.
+        Deborah Baeten — DBNT, Peer, Limburg, België.
         <br />
         E-mail: <a href="mailto:deborah@dbnt.studio">deborah@dbnt.studio</a>
-        <br />
-        Ondernemingsnummer / btw: [aanvullen]
       </p>
     </LegalLayout>
   );
