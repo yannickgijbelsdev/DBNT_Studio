@@ -82,10 +82,12 @@ const ArticlePage = () => {
       description: article.excerpt || stripHtml(article.body),
       keywords: extraKeywords,
       image: article.image_url,
-      url: `${window.location.origin}/artikel/${id}`,
+      url: `${window.location.origin}/project/${
+        slug || article.slug || slugify(article.title)
+      }`,
     });
     return () => resetSEO();
-  }, [article, id]);
+  }, [article, id, slug]);
 
   const goBack = () => {
     if (window.history.length > 1) navigate(-1);

@@ -22,6 +22,7 @@ function App() {
         <Routes>
           <Route path="/" element={<WorkPage />} />
           <Route path="/work" element={<WorkPage />} />
+          <Route path="/project/:slug" element={<ArticlePage />} />
           <Route path="/artikel/:id" element={<ArticlePage />} />
           <Route path="/over-mij" element={<AboutPage />} />
           <Route path="/algemene-voorwaarden" element={<TermsPage />} />
