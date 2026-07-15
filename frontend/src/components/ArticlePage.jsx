@@ -11,7 +11,7 @@ const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || "";
 const API = `${BACKEND_URL}/api`;
 
 // Labels whose paragraphs must be removed from the article body.
-const HIDDEN_LABELS = ["type", "oplevering", "klant", "software"];
+const HIDDEN_LABELS = ["oplevering", "klant", "software"];
 
 const sanitizeBody = (html) => {
   if (!html) return "";
