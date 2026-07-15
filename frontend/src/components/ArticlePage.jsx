@@ -10,26 +10,6 @@ import { slugify } from "../lib/slug";
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || "";
 const API = `${BACKEND_URL}/api`;
 
-// Labels whose paragraphs must be removed from the article body.
-const HIDDEN_LABELS = ["oplevering", "klant", "software"];
-
-const sanitizeBody = (html) => {
-  if (!html) return "";
-  try {
-    const doc = new DOMParser().parseFromString(html, "text/html");
-    doc.querySelectorAll("p").forEach((p) => {
-      const text = (p.textContent || "").trim().toLowerCase();
-      const isMeta = HIDDEN_LABELS.some(
-        (label) => text.startsWith(label + ":") || text.startsWith(label + " :")
-      );
-      if (isMeta) p.remove();
-    });
-    return doc.body.innerHTML;
-  } catch {
-    return html;
-  }
-};
-
 const ArticlePage = () => {
   const { id, slug } = useParams();
   const navigate = useNavigate();
@@ -146,7 +126,7 @@ const ArticlePage = () => {
 
             <div
               className="article-body mt-10"
-              dangerouslySetInnerHTML={{ __html: sanitizeBody(article.body) }}
+              dangerouslySetInnerHTML={{ __html: article.body }}
             />
           </article>
         )}
