@@ -135,11 +135,11 @@ const ArticlePage = () => {
             </h1>
 
             {article.image_url && (
-              <div className="mt-8 w-full overflow-hidden rounded-3xl bg-white/10">
+              <div className="mt-8 w-full overflow-hidden rounded-3xl">
                 <img
                   src={article.image_url}
                   alt={article.title}
-                  className="h-auto w-full object-contain"
+                  className="block h-auto w-full"
                 />
               </div>
             )}
