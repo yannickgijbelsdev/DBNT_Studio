@@ -5,6 +5,7 @@ import { slugify } from "../lib/slug";
 const ArticleCard = ({ article, index }) => {
   const [visible, setVisible] = useState(false);
   const [hover, setHover] = useState(false);
+  const [imgLoaded, setImgLoaded] = useState(!article.image_url);
   const ref = useRef(null);
   const navigate = useNavigate();
 
@@ -24,6 +25,8 @@ const ArticleCard = ({ article, index }) => {
     return () => obs.disconnect();
   }, []);
 
+  const show = visible && imgLoaded;
+
   return (
     <button
       ref={ref}
@@ -34,8 +37,8 @@ const ArticleCard = ({ article, index }) => {
       onMouseLeave={() => setHover(false)}
       className="group block w-full text-left"
       style={{
-        opacity: visible ? 1 : 0,
-        transform: visible ? "translateY(0)" : "translateY(40px)",
+        opacity: show ? 1 : 0,
+        transform: show ? "translateY(0)" : "translateY(40px)",
         transition: `opacity 0.8s cubic-bezier(0.16,1,0.3,1) ${
           (index % 3) * 0.08
         }s, transform 0.8s cubic-bezier(0.16,1,0.3,1) ${(index % 3) * 0.08}s`,
@@ -46,7 +49,8 @@ const ArticleCard = ({ article, index }) => {
           <img
             src={article.image_url}
             alt={article.title}
-            loading="lazy"
+            onLoad={() => setImgLoaded(true)}
+            onError={() => setImgLoaded(true)}
             className="absolute inset-0 h-full w-full rounded-3xl object-cover"
             style={{
               transform: hover ? "scale(1.04)" : "scale(1)",
