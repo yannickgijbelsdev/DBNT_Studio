@@ -32,7 +32,7 @@ const ArticleCard = ({ article, index }) => {
       }
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
-      className="group mb-6 block w-full break-inside-avoid text-left"
+      className="group block w-full text-left"
       style={{
         opacity: visible ? 1 : 0,
         transform: visible ? "translateY(0)" : "translateY(40px)",
@@ -41,17 +41,13 @@ const ArticleCard = ({ article, index }) => {
         }s, transform 0.8s cubic-bezier(0.16,1,0.3,1) ${(index % 3) * 0.08}s`,
       }}
     >
-      <div
-        className={`relative w-full overflow-hidden rounded-3xl bg-gradient-to-br from-neutral-800 to-neutral-900 ${
-          article.image_url ? "" : "aspect-square"
-        }`}
-      >
+      <div className="relative aspect-[4/3] w-full overflow-hidden rounded-3xl bg-gradient-to-br from-neutral-800 to-neutral-900">
         {article.image_url ? (
           <img
             src={article.image_url}
             alt={article.title}
             loading="lazy"
-            className="block h-auto w-full rounded-3xl"
+            className="absolute inset-0 h-full w-full rounded-3xl object-cover"
             style={{
               transform: hover ? "scale(1.04)" : "scale(1)",
               transition: "transform 0.9s cubic-bezier(0.16,1,0.3,1)",
@@ -66,7 +62,7 @@ const ArticleCard = ({ article, index }) => {
         )}
 
         {/* Blurred, darkened bottom of the photo (no box around title) */}
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-2/5 overflow-hidden rounded-b-3xl">
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/4 overflow-hidden rounded-b-3xl">
           <div
             className="absolute inset-0 backdrop-blur-md"
             style={{

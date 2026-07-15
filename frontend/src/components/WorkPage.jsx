@@ -94,12 +94,12 @@ const WorkPage = () => {
         {/* Grid */}
         <div
           id="work-grid"
-          className="mt-10 gap-6 sm:columns-2 lg:mt-12 lg:columns-3"
+          className="mt-10 grid grid-cols-1 gap-x-6 gap-y-14 sm:grid-cols-2 lg:mt-12 lg:grid-cols-3"
         >
           {loading &&
             Array.from({ length: 3 }).map((_, i) => (
-              <div key={i} className="mb-6 break-inside-avoid animate-pulse">
-                <div className="aspect-square w-full rounded-3xl bg-white/10" />
+              <div key={i} className="animate-pulse">
+                <div className="aspect-[4/3] w-full rounded-3xl bg-white/10" />
               </div>
             ))}
 
