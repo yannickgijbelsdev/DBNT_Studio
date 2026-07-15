@@ -31,6 +31,10 @@ een FastAPI proxy (om mixed-content/CORS te vermijden).
   tool (homepage → klik → /project/renovatiewerken-devos laadt titel + body correct).
 
 ## Backlog / Toekomst
+- **[2026-07-15] Logo + featured image fix:** header-logo lokaal gehost
+  (`/assets/dbnt-logo.png`) i.p.v. externe customer-assets URL (was geblokkeerd op
+  productie). Featured image op projectpagina toont nu volledig (object-contain i.p.v.
+  aspect-16/9 object-cover crop). Body rendert volledig (geverifieerd via API + preview).
 - P2: ArticlePage haalt volledige homepagina-lijst op om slug→id te mappen (extra fetch).
   Optioneel optimaliseren als Koodh API directe slug-query gaat ondersteunen.
 - P2: Titels tot 360 tekens visueel testen op zeer lange titels.

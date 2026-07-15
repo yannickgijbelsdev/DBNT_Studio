@@ -31,7 +31,7 @@ const Header = () => {
       <div className="relative mx-auto flex h-[68px] max-w-[1600px] items-center px-6 lg:px-10">
         <a href="/" className="select-none">
           <img
-            src="https://customer-assets.emergentagent.com/job_agency-showcase-212/artifacts/ri8ebb60_Logo-black-1.png"
+            src="/assets/dbnt-logo.png"
             alt="DBNT"
             className="h-6 w-auto invert lg:h-7"
           />
