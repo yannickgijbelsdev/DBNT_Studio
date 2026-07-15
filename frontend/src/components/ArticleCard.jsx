@@ -32,7 +32,7 @@ const ArticleCard = ({ article, index }) => {
       }
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
-      className="group block w-full text-left"
+      className="group mb-6 block w-full break-inside-avoid text-left"
       style={{
         opacity: visible ? 1 : 0,
         transform: visible ? "translateY(0)" : "translateY(40px)",
@@ -41,13 +41,17 @@ const ArticleCard = ({ article, index }) => {
         }s, transform 0.8s cubic-bezier(0.16,1,0.3,1) ${(index % 3) * 0.08}s`,
       }}
     >
-      <div className="relative w-full aspect-square overflow-hidden rounded-3xl bg-gradient-to-br from-neutral-800 to-neutral-900">
+      <div
+        className={`relative w-full overflow-hidden rounded-3xl bg-gradient-to-br from-neutral-800 to-neutral-900 ${
+          article.image_url ? "" : "aspect-square"
+        }`}
+      >
         {article.image_url ? (
           <img
             src={article.image_url}
             alt={article.title}
             loading="lazy"
-            className="absolute inset-0 h-full w-full rounded-3xl object-cover"
+            className="block h-auto w-full rounded-3xl"
             style={{
               transform: hover ? "scale(1.04)" : "scale(1)",
               transition: "transform 0.9s cubic-bezier(0.16,1,0.3,1)",
