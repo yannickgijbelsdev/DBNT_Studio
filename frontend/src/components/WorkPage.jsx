@@ -42,7 +42,7 @@ const WorkPage = () => {
         {/* Banner: full photo */}
         <section className="relative h-[56vh] max-h-[600px] min-h-[300px] overflow-hidden rounded-[2rem] bg-neutral-100 lg:rounded-[2.5rem]">
           <img
-            src="https://customer-assets.emergentagent.com/job_agency-showcase-212/artifacts/9or15fru_DBNT_STUDIO_BANNER.png"
+            src="/assets/dbnt-banner.png"
             alt="DBNT Studio"
             className="h-full w-full object-cover object-[center_30%]"
           />

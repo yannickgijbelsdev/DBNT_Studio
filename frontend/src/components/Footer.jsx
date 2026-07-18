@@ -71,7 +71,7 @@ const Footer = () => {
           aria-label="Koodh"
         >
           <img
-            src="https://customer-assets.emergentagent.com/job_agency-showcase-212/artifacts/udaapal7_koodh-logo-brand.png"
+            src="/assets/koodh-logo.png"
             alt="Koodh"
             className="h-4 w-auto lg:h-5"
             style={{ filter: "brightness(0) invert(1)" }}
