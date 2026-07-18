@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { RotateCw, Download, User } from "lucide-react";
+import { RotateCw, Download, User, Linkedin } from "lucide-react";
 import Header from "./Header";
 import ArticleCard from "./ArticleCard";
 import Reveal from "./Reveal";
@@ -67,6 +67,17 @@ const WorkPage = () => {
                   <User size={16} />
                   Over mij
                 </Link>
+                <a
+                  href="https://www.linkedin.com/in/deborahbaeten/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-testid="banner-linkedin-btn"
+                  aria-label="LinkedIn"
+                  className="inline-flex items-center gap-2 rounded-full border border-white/40 bg-white/10 px-5 py-2.5 text-sm font-medium text-white backdrop-blur-md transition-colors hover:bg-white/20"
+                >
+                  <Linkedin size={16} />
+                  LinkedIn
+                </a>
                 <a
                   href="/assets/CV-A4-Sollicitatie.pdf"
                   target="_blank"
